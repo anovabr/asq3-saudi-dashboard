@@ -443,8 +443,10 @@ function updateProgress() {
   document.getElementById('progressText').textContent = `${rated} of ${totalItems} items rated (${pct}%)`;
 }
 
-// ── Load items ────────────────────────────────────────────────────────────────
-(async function () {
+// ── Load items (with retry) ────────────────────────────────────────────────────
+(async function loadItems(attempt) {
+  attempt = attempt || 1;
+  const maxAttempts = 5;
   const paths = ['data/item_quality_template.csv', 'item_quality_template.csv'];
   for (const p of paths) {
     try {
@@ -454,8 +456,16 @@ function updateProgress() {
       if (items.length > 0) { buildTable(items); return; }
     } catch (_) { }
   }
+  // Retry after a short delay (server may still be starting)
+  if (attempt < maxAttempts) {
+    document.getElementById('loadingMsg').innerHTML =
+      '<div class="spinner"></div>Loading items (attempt ' + (attempt+1) + '/' + maxAttempts + ')...';
+    await new Promise(r => setTimeout(r, 1500 * attempt));
+    return loadItems(attempt + 1);
+  }
   document.getElementById('loadingMsg').innerHTML =
-    '<p style="color:#c0392b;font-size:.88em">Items could not be loaded. Please open this page through a web server.</p>';
+    '<p style="color:#c0392b;font-size:.92em">Items could not be loaded. ' +
+    'Make sure <code>data/item_quality_template.csv</code> exists and the page is served via a web server (not opened as a local file).</p>';
 })();
 
 // ── Collect current data ──────────────────────────────────────────────────────

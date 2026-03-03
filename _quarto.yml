@@ -1,6 +1,8 @@
 ﻿project:
   type: website
   output-dir: _site
+  resources:
+    - data/item_quality_template.csv
 
 website:
   title: "ASQ-3 Saudi Dashboard"
