@@ -31,7 +31,7 @@ jobs:
       - name: Prepare deploy directory
         run: |
           mkdir -p _deploy/data
-          cp content-validity.html _deploy/index.html
+          cp _site/content-validity.html _deploy/index.html
           cp -r site_libs _deploy/ 2>/dev/null || true
           cp data/item_quality_template.csv _deploy/data/
 
