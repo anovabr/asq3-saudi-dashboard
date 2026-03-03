@@ -28,13 +28,11 @@ jobs:
       - name: Render Quarto site
         run: quarto render
       
+      - name: Install Netlify CLI
+        run: npm install -g netlify-cli
+      
       - name: Deploy to Netlify
-        uses: nwtgck/actions-netlify@v2.0
-        with:
-          publish-dir: './_site'
-          production-branch: main
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          deploy-message: 'Deploy from GitHub Actions'
+        run: netlify deploy --prod --dir=_site
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
