@@ -1,0 +1,75 @@
+---
+title: "Proposed cutoff"
+format: html
+---
+
+```{r}
+source("R/data_setup.R")
+```
+
+Use the standard deviation control to define cutoff scores (`mean - k*SD`), where `k` is one of: 0.5, 1, 1.5, or 2.
+The table updates dynamically and shows each questionnaire (`quest`) by domain as:
+`cutoff score (percentage of children below cutoff)`.
+
+```{r, results='asis'}
+if (!requireNamespace("jsonlite", quietly = TRUE)) {
+  cat("`jsonlite` is required for this interactive section.")
+} else {
+  cutoff_levels <- sort(unique(cutoff_results_wide$sd_below))
+  cutoff_tables <- split(cutoff_results_wide %>% select(-sd_below), cutoff_results_wide$sd_below)
+  cutoff_json <- jsonlite::toJSON(cutoff_tables, dataframe = "rows", auto_unbox = TRUE)
+  column_names <- names(cutoff_tables[[1]])
+  level_js <- jsonlite::toJSON(as.numeric(cutoff_levels), auto_unbox = TRUE)
+
+  cat('<div style="margin-bottom: 0.75rem;">')
+  cat('<label for="sd-slider"><strong>Standard deviations below mean:</strong> <span id="sd-value">1</span></label>')
+  cat('<input id="sd-slider" type="range" min="1" max="4" step="1" value="2" style="width: 100%;">')
+  cat('<div style="display:flex;justify-content:space-between;font-size:0.9rem;"><span>0.5</span><span>1</span><span>1.5</span><span>2</span></div>')
+  cat('</div>')
+
+  cat('<div style="overflow-x:auto;"><table id="cutoff-table" class="table table-striped table-sm"><thead><tr>')
+  for (nm in column_names) {
+    cat(sprintf("<th>%s</th>", nm))
+  }
+  cat('</tr></thead><tbody></tbody></table></div>')
+
+  cat(sprintf(
+    '<script>
+      (function () {
+        var levels = %s;
+        var dataByLevel = %s;
+        var slider = document.getElementById("sd-slider");
+        var valueLabel = document.getElementById("sd-value");
+        var tbody = document.querySelector("#cutoff-table tbody");
+
+        function formatKey(level) {
+          return String(level);
+        }
+
+        function render(level) {
+          var key = formatKey(level);
+          var rows = dataByLevel[key] || [];
+          valueLabel.textContent = level;
+          tbody.innerHTML = rows.map(function (row) {
+            var cells = Object.keys(row).map(function (k) {
+              return "<td>" + (row[k] == null ? "" : row[k]) + "</td>";
+            }).join("");
+            return "<tr>" + cells + "</tr>";
+          }).join("");
+        }
+
+        slider.addEventListener("input", function () {
+          var idx = parseInt(slider.value, 10) - 1;
+          render(levels[idx]);
+        });
+
+        render(levels[parseInt(slider.value, 10) - 1]);
+      })();
+    </script>',
+    level_js,
+    cutoff_json
+  ))
+}
+```
+
+*Note. `gm` = gross motor, `fm` = fine motor, `cg` = problem-solving, `ps` = personal-social, and `c` = communication.*

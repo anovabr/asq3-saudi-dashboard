@@ -1,0 +1,81 @@
+﻿---
+title: "Psychometric results"
+format: html
+---
+
+```{r}
+source("R/data_setup.R")
+```
+
+## Basic {#basic}
+
+#### Cronbach alpha by `quest`
+
+```{r}
+if (all(is.na(alpha_by_quest$alpha))) {
+  cat("Package `psych` is not available in this environment, so alpha estimates are shown as NA.")
+}
+
+if (requireNamespace("DT", quietly = TRUE)) {
+  DT::datatable(
+    alpha_by_quest %>% select(-domain_code),
+    rownames = FALSE,
+    options = list(pageLength = 25, scrollX = TRUE, dom = "tip")
+  )
+} else {
+  knitr::kable(alpha_by_quest %>% select(-domain_code), caption = "Install package `DT` for table display")
+}
+```
+*Note. `gm` = gross motor, `fm` = fine motor, `cg` = problem-solving, `ps` = personal-social, and `c` = communication.*
+
+#### Alpha trend across questionnaires
+
+```{r}
+alpha_plot_data <- alpha_by_quest %>% filter(!is.na(alpha))
+
+if (nrow(alpha_plot_data) == 0) {
+  cat("No alpha values available to plot.")
+} else {
+  ggplot(alpha_plot_data, aes(x = quest, y = alpha, color = domain)) +
+    geom_line(linewidth = 1) +
+    geom_point(size = 2) +
+    scale_x_continuous(breaks = sort(unique(alpha_plot_data$quest))) +
+    labs(x = "Questionnaire month (quest)", y = "Cronbach alpha", color = "Domain") +
+    theme_minimal(base_size = 12) +
+    theme(legend.position = "bottom")
+}
+```
+
+## CFA {#cfa}
+
+#### CFA fit indices (cached results)
+
+```{r}
+if (!cfa_available || nrow(cfa_fit_by_quest) == 0) {
+  cat("No cached CFA fit results were found in the loaded data.")
+} else if (requireNamespace("DT", quietly = TRUE)) {
+  DT::datatable(
+    cfa_fit_by_quest,
+    rownames = FALSE,
+    options = list(pageLength = 20, scrollX = TRUE, dom = "tip")
+  )
+} else {
+  knitr::kable(cfa_fit_by_quest, caption = "Install package `DT` for table display")
+}
+```
+
+#### Standardized factor loadings (cached results)
+
+```{r}
+if (!cfa_available || nrow(cfa_loadings) == 0) {
+  cat("No cached CFA loadings were found in the loaded data.")
+} else if (requireNamespace("DT", quietly = TRUE)) {
+  DT::datatable(
+    cfa_loadings,
+    rownames = FALSE,
+    options = list(pageLength = 25, scrollX = TRUE, dom = "tip")
+  )
+} else {
+  knitr::kable(head(cfa_loadings, 50), caption = "Install package `DT` for table display")
+}
+```

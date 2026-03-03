@@ -1,0 +1,51 @@
+﻿---
+title: "Descriptive statistics"
+format: html
+---
+
+```{r}
+source("R/data_setup.R")
+```
+
+## Demographics
+
+```{r}
+knitr::kable(gender_summary, caption = "Gender distribution")
+```
+
+```{r}
+knitr::kable(head(city_summary, 15), caption = "Top 15 cities")
+```
+
+## `quest`-grouped descriptives
+
+```{r}
+if (requireNamespace("DT", quietly = TRUE)) {
+  DT::datatable(
+    descriptive_msd_by_quest,
+    rownames = FALSE,
+    options = list(pageLength = 20, scrollX = TRUE, dom = "tip")
+  )
+} else {
+  knitr::kable(descriptive_msd_by_quest, caption = "Install package `DT` for table display")
+}
+```
+*Note. `gm` = gross motor, `fm` = fine motor, `cg` = problem-solving, `ps` = personal-social, and `c` = communication.*
+
+## Selected analysis columns preview
+
+```{r}
+preview_cols <- c("quest", "age", "birth_date", "gender", "city", "c1", "gm1", "fm1", "cg1", "ps1", "c_sum", "gm_sum", "fm_sum", "cg_sum", "ps_sum")
+preview_df <- selected_data %>% select(any_of(preview_cols))
+
+if (requireNamespace("DT", quietly = TRUE)) {
+  DT::datatable(
+    preview_df,
+    rownames = FALSE,
+    options = list(pageLength = 15, scrollX = TRUE, dom = "tip")
+  )
+} else {
+  knitr::kable(head(preview_df, 25), caption = "Install package `DT` for table filters")
+}
+```
+*Note. `gm` = gross motor, `fm` = fine motor, `cg` = problem-solving, `ps` = personal-social, and `c` = communication.*

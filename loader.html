@@ -1,0 +1,25 @@
+<div id="page-loader" aria-live="polite" aria-label="Loading">
+  <div class="wheel"></div>
+  <div>Loading...</div>
+</div>
+<script>
+  window.addEventListener("load", function () {
+    var loader = document.getElementById("page-loader");
+    var sidebar = document.getElementById("quarto-sidebar");
+
+    if (sidebar && !document.getElementById("sidebar-signature")) {
+      var sig = document.createElement("div");
+      sig.id = "sidebar-signature";
+      sig.innerHTML = '<div class="name">🦆 Luis Anunciacao, PhD</div><div class="dt" id="sidebar-datetime"></div>';
+      sidebar.appendChild(sig);
+
+      var dt = document.getElementById("sidebar-datetime");
+      var now = new Date();
+      dt.textContent = now.toLocaleString();
+    }
+
+    if (!loader) return;
+    loader.classList.add("hidden");
+    setTimeout(function () { loader.remove(); }, 250);
+  });
+</script>

@@ -1,0 +1,38 @@
+﻿project:
+  type: website
+  output-dir: _site
+
+website:
+  title: "ASQ-3 Saudi Dashboard"
+  sidebar:
+    style: docked
+    search: false
+    contents:
+      - href: index.qmd
+        text: Overall
+      - text: ""
+      - text: ""
+      - section: Results
+        contents:
+          - href: descriptive-statistics.qmd
+            text: Descriptive
+          - href: psychometric-results.qmd#basic
+            text: Psychometrics
+          - href: proposed-cutoff.qmd
+            text: Cutoff
+      - text: ""
+      - text: ""
+      - href: item-bank.qmd
+        text: Content review
+
+format:
+  html:
+    theme: cosmo
+    toc: false
+    css: loader.css
+    include-after-body: loader.html
+
+execute:
+  echo: false
+  warning: false
+  message: false

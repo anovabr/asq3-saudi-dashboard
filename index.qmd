@@ -1,0 +1,41 @@
+﻿---
+title: "Overall"
+format: html
+---
+
+```{r}
+source("R/data_setup.R")
+```
+
+This dashboard summarizes ASQ-3 Saudi results and is organized in the left sidebar.
+Use **Overall** for sample-level indicators and trends by questionnaire month (`quest`), **Descriptive statistics** to build custom Table 1 outputs, and **Psychometric results** to review reliability estimates across domains and questionnaires.
+
+## Key indicators
+
+```{r}
+knitr::kable(overall_summary, caption = "Project-level overview")
+```
+
+## Records by questionnaire (`quest`)
+
+```{r}
+knitr::kable(quest_counts, caption = "N by ASQ-3 questionnaire month")
+```
+
+```{r}
+ggplot(quest_counts, aes(x = factor(quest), y = n)) +
+  geom_col(fill = "#1F6AA5") +
+  labs(x = "Questionnaire month (quest)", y = "N", title = "Sample size by questionnaire") +
+  theme_minimal(base_size = 12)
+```
+
+## Domain means by `quest`
+
+```{r}
+ggplot(domain_summary_long, aes(x = quest, y = mean_score, color = domain)) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 2) +
+  scale_x_continuous(breaks = sort(unique(domain_summary_long$quest))) +
+  labs(x = "Questionnaire month (quest)", y = "Mean domain score", color = "Domain") +
+  theme_minimal(base_size = 12)
+```
