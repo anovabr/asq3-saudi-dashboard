@@ -501,39 +501,54 @@ function collectData() {
 
 // ── Auto-save (debounced) ─────────────────────────────────────────────────────
 let saveTimer = null;
+let lastSavedJSON = '';          // track last payload to avoid duplicate appends
+
 function scheduleSave() {
   clearTimeout(saveTimer);
   setSaveStatus('pending');
   saveTimer = setTimeout(saveNow, 2000);
 }
 
-function setSaveStatus(state) {
+function setSaveStatus(state, msg) {
   const dot  = document.getElementById('saveDot');
   const text = document.getElementById('saveStatus');
   dot.className = 'save-dot';
-  if (state === 'pending') { dot.classList.add('saving'); text.textContent = 'Saving...'; }
+  if (state === 'pending') { dot.classList.add('saving'); text.textContent = msg || 'Saving...'; }
   else if (state === 'ok') { dot.classList.add('saved');  text.textContent = 'Saved — ' + new Date().toLocaleTimeString(); }
-  else if (state === 'err'){ dot.classList.add('error');  text.textContent = 'Save failed — check connection'; }
+  else if (state === 'err'){ dot.classList.add('error');  text.textContent = msg || 'Save failed — check connection'; }
   else { text.textContent = 'Not saved yet — ratings are sent automatically as you work'; }
 }
 
 async function saveNow() {
   if (SHEETS_URL === 'PASTE_YOUR_APPS_SCRIPT_URL_HERE') {
-    setSaveStatus('err');
+    setSaveStatus('err', 'Error: Apps Script URL not configured');
     return;
   }
+  // Validate required reviewer fields before saving
+  if (!validate()) return;
+
   const data = collectData();
-  if (!data.expert.name || !data.expert.email) {
-    setSaveStatus(null); return;   // don't save until reviewer is identified
+  if (data.ratings.length === 0) {
+    setSaveStatus('pending', 'Waiting — rate at least one item to save');
+    return;
   }
+
+  // Skip save if nothing changed since last successful save
+  const payload = JSON.stringify(data);
+  if (payload === lastSavedJSON) {
+    setSaveStatus('ok');
+    return;
+  }
+
   setSaveStatus('pending');
   try {
     await fetch(SHEETS_URL, {
       method: 'POST',
       mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
+      headers: { 'Content-Type': 'text/plain' },
+      body: payload
     });
+    lastSavedJSON = payload;
     setSaveStatus('ok');
   } catch (e) {
     setSaveStatus('err');
@@ -542,11 +557,13 @@ async function saveNow() {
 
 // ── Validation ────────────────────────────────────────────────────────────────
 function validate() {
-  if (!$v('fullName'))        { showErr('Full Name is required.');                   return false; }
-  if (!/\S+@\S+\.\S+/.test($v('email'))) { showErr('A valid Email is required.');  return false; }
-  if (!$v('expertise'))       { showErr('Field of Expertise is required.');          return false; }
-  if (!$v('yearsExperience')) { showErr('Years of Experience is required.');         return false; }
-  if (!$v('language'))        { showErr('Arabic Language Proficiency is required.'); return false; }
+  if (!$v('fullName'))        { setSaveStatus('err', 'Fill in your Full Name to enable saving');       return false; }
+  if (!/\S+@\S+\.\S+/.test($v('email'))) { setSaveStatus('err', 'Enter a valid Email to enable saving'); return false; }
+  if (!$v('expertise'))       { setSaveStatus('err', 'Select Field of Expertise to enable saving');    return false; }
+  if (!$v('yearsExperience')) { setSaveStatus('err', 'Enter Years of Experience to enable saving');    return false; }
+  if (!$v('language'))        { setSaveStatus('err', 'Select Language Proficiency to enable saving');  return false; }
+  // Clear any previous error alert
+  document.getElementById('alertErr').style.display = 'none';
   return true;
 }
 function showErr(msg) {
@@ -563,6 +580,7 @@ function resetForm() {
   document.querySelectorAll('.comment-ta').forEach(el => el.value  = '');
   document.getElementById('alertErr').style.display = 'none';
   document.getElementById('alertOk').style.display  = 'none';
+  lastSavedJSON = '';
   setSaveStatus(null);
   updateProgress();
 }
