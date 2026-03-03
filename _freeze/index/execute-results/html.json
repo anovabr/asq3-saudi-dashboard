@@ -1,0 +1,17 @@
+{
+  "hash": "99781513c135148157bf7c4461950043",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Overall\"\nformat: html\n---\n\n\n::: {.cell}\n\n:::\n\n\nThis dashboard summarizes ASQ-3 Saudi results and is organized in the left sidebar.\nUse **Overall** for sample-level indicators and trends by questionnaire month (`quest`), **Descriptive statistics** to build custom Table 1 outputs, and **Psychometric results** to review reliability estimates across domains and questionnaires.\n\n## Key indicators\n\n\n::: {.cell}\n::: {.cell-output-display}\n\n\nTable: Project-level overview\n\n| questionnaires| total_records| mean_age| sd_age|\n|--------------:|-------------:|--------:|------:|\n|             20|         42680|    27.48|  17.58|\n\n\n:::\n:::\n\n\n## Records by questionnaire (`quest`)\n\n\n::: {.cell}\n::: {.cell-output-display}\n\n\nTable: N by ASQ-3 questionnaire month\n\n| quest|    n|\n|-----:|----:|\n|     2| 1868|\n|     4| 2115|\n|     6| 1822|\n|     8| 1947|\n|    10|  910|\n|    12| 1821|\n|    14| 1744|\n|    16| 1736|\n|    18| 1633|\n|    20| 1698|\n|    22| 1735|\n|    24| 2263|\n|    27| 2229|\n|    30| 2120|\n|    33| 2099|\n|    36| 3053|\n|    42| 2894|\n|    48| 3356|\n|    54| 2620|\n|    60| 3017|\n\n\n:::\n:::\n\n\n\n::: {.cell}\n::: {.cell-output-display}\n![](index_files/figure-html/unnamed-chunk-4-1.png){width=672}\n:::\n:::\n\n\n## Domain means by `quest`\n\n\n::: {.cell}\n::: {.cell-output-display}\n![](index_files/figure-html/unnamed-chunk-5-1.png){width=672}\n:::\n:::\n\n",
+    "supporting": [
+      "index_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
