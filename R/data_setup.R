@@ -162,21 +162,25 @@ ai_translation_dictionary <- if (file.exists(ai_translation_path)) {
   tibble()
 }
 
-item_dictionary <- full_join(
-  arabic_item_dictionary,
-  english_item_dictionary,
-  by = c("quest", "item_code")
-) %>%
-  left_join(ai_translation_dictionary, by = "item_text_ar") %>%
-  mutate(
-    item_text_en = coalesce(item_text_en_asq3, item_text_en, item_text_en_ai),
-    domain_code = gsub("[0-9]+$", "", item_code),
-    item_no = suppressWarnings(as.integer(gsub("^[a-z]+", "", item_code))),
-    domain = recode(domain_code, !!!domain_labels),
-    quest_label = paste0(quest, "-month"),
-    item_id = paste0("q", quest, "_", item_code)
+item_dictionary <- if (nrow(arabic_item_dictionary) > 0 || nrow(english_item_dictionary) > 0) {
+  full_join(
+    arabic_item_dictionary,
+    english_item_dictionary,
+    by = c("quest", "item_code")
   ) %>%
-  arrange(quest, match(domain_code, names(domain_labels)), item_no)
+    left_join(ai_translation_dictionary, by = "item_text_ar") %>%
+    mutate(
+      item_text_en = coalesce(item_text_en_asq3, item_text_en, item_text_en_ai),
+      domain_code = gsub("[0-9]+$", "", item_code),
+      item_no = suppressWarnings(as.integer(gsub("^[a-z]+", "", item_code))),
+      domain = recode(domain_code, !!!domain_labels),
+      quest_label = paste0(quest, "-month"),
+      item_id = paste0("q", quest, "_", item_code)
+    ) %>%
+    arrange(quest, match(domain_code, names(domain_labels)), item_no)
+} else {
+  tibble()
+}
 
 # Fallback for environments where readxl/source parsing is unavailable:
 # use previously exported template so item bank still works.
