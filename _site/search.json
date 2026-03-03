@@ -1,42 +1,78 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Overall",
+    "objectID": "descriptive-statistics.html",
+    "href": "descriptive-statistics.html",
+    "title": "Descriptive statistics",
     "section": "",
-    "text": "This dashboard summarizes ASQ-3 Saudi results and is organized in the left sidebar. Use Overall for sample-level indicators and trends by questionnaire month (quest), Descriptive statistics to build custom Table 1 outputs, and Psychometric results to review reliability estimates across domains and questionnaires.",
+    "text": "Gender distribution\n\n\ngender\nn\npct\n\n\n\n\nf\n18063\n42.3\n\n\nm\n24617\n57.7\n\n\n\n\n\n\n\n\nTop 15 cities\n\n\ncity\nn\n\n\n\n\nNA\n8959\n\n\nالرياض\n7749\n\n\nجدة\n4051\n\n\nالمدينة المنورة\n2189\n\n\nمكة المكرمة\n2172\n\n\nالدمام\n1676\n\n\nالطائف\n1451\n\n\nتبوك\n1219\n\n\nخميس مشيط\n853\n\n\nبريدة\n803\n\n\nحائل\n652\n\n\nحفر الباطن\n560\n\n\nالخبر\n508\n\n\nالجبيل\n500\n\n\nالخرج\n439",
     "crumbs": [
-      "Overall"
+      "Results",
+      "Descriptive"
     ]
   },
   {
-    "objectID": "index.html#key-indicators",
-    "href": "index.html#key-indicators",
-    "title": "Overall",
-    "section": "Key indicators",
-    "text": "Key indicators\n\n\n\nProject-level overview\n\n\nquestionnaires\ntotal_records\nmean_age\nsd_age\n\n\n\n\n20\n42680\n27.48\n17.58",
+    "objectID": "descriptive-statistics.html#demographics",
+    "href": "descriptive-statistics.html#demographics",
+    "title": "Descriptive statistics",
+    "section": "",
+    "text": "Gender distribution\n\n\ngender\nn\npct\n\n\n\n\nf\n18063\n42.3\n\n\nm\n24617\n57.7\n\n\n\n\n\n\n\n\nTop 15 cities\n\n\ncity\nn\n\n\n\n\nNA\n8959\n\n\nالرياض\n7749\n\n\nجدة\n4051\n\n\nالمدينة المنورة\n2189\n\n\nمكة المكرمة\n2172\n\n\nالدمام\n1676\n\n\nالطائف\n1451\n\n\nتبوك\n1219\n\n\nخميس مشيط\n853\n\n\nبريدة\n803\n\n\nحائل\n652\n\n\nحفر الباطن\n560\n\n\nالخبر\n508\n\n\nالجبيل\n500\n\n\nالخرج\n439",
     "crumbs": [
-      "Overall"
+      "Results",
+      "Descriptive"
     ]
   },
   {
-    "objectID": "index.html#records-by-questionnaire-quest",
-    "href": "index.html#records-by-questionnaire-quest",
-    "title": "Overall",
-    "section": "Records by questionnaire (quest)",
-    "text": "Records by questionnaire (quest)\n\n\n\nN by ASQ-3 questionnaire month\n\n\nquest\nn\n\n\n\n\n2\n1868\n\n\n4\n2115\n\n\n6\n1822\n\n\n8\n1947\n\n\n10\n910\n\n\n12\n1821\n\n\n14\n1744\n\n\n16\n1736\n\n\n18\n1633\n\n\n20\n1698\n\n\n22\n1735\n\n\n24\n2263\n\n\n27\n2229\n\n\n30\n2120\n\n\n33\n2099\n\n\n36\n3053\n\n\n42\n2894\n\n\n48\n3356\n\n\n54\n2620\n\n\n60\n3017",
+    "objectID": "descriptive-statistics.html#quest-grouped-descriptives",
+    "href": "descriptive-statistics.html#quest-grouped-descriptives",
+    "title": "Descriptive statistics",
+    "section": "quest-grouped descriptives",
+    "text": "quest-grouped descriptives\n\n\n\n\n\n\nNote. gm = gross motor, fm = fine motor, cg = problem-solving, ps = personal-social, and c = communication.",
     "crumbs": [
-      "Overall"
+      "Results",
+      "Descriptive"
     ]
   },
   {
-    "objectID": "index.html#domain-means-by-quest",
-    "href": "index.html#domain-means-by-quest",
-    "title": "Overall",
-    "section": "Domain means by quest",
-    "text": "Domain means by quest",
+    "objectID": "descriptive-statistics.html#selected-analysis-columns-preview",
+    "href": "descriptive-statistics.html#selected-analysis-columns-preview",
+    "title": "Descriptive statistics",
+    "section": "Selected analysis columns preview",
+    "text": "Selected analysis columns preview\n\n\n\n\n\n\nNote. gm = gross motor, fm = fine motor, cg = problem-solving, ps = personal-social, and c = communication.",
     "crumbs": [
-      "Overall"
+      "Results",
+      "Descriptive"
     ]
+  },
+  {
+    "objectID": "proposed-cutoff.html",
+    "href": "proposed-cutoff.html",
+    "title": "Proposed cutoff",
+    "section": "",
+    "text": "Use the standard deviation control to define cutoff scores (mean - k*SD), where k is one of: 0.5, 1, 1.5, or 2. The table updates dynamically and shows each questionnaire (quest) by domain as: cutoff score (percentage of children below cutoff).\n\nStandard deviations below mean: 1\n\n0.511.52\n\n\n\n\n\n\n\nquest\n\n\nCommunication\n\n\nFine motor\n\n\nGross motor\n\n\nPersonal-social\n\n\nProblem-solving\n\n\n\n\n\n\n\n\nNote. gm = gross motor, fm = fine motor, cg = problem-solving, ps = personal-social, and c = communication.",
+    "crumbs": [
+      "Results",
+      "Cutoff"
+    ]
+  },
+  {
+    "objectID": "psychometric-results.html",
+    "href": "psychometric-results.html",
+    "title": "Psychometric results",
+    "section": "",
+    "text": "Note. gm = gross motor, fm = fine motor, cg = problem-solving, ps = personal-social, and c = communication."
+  },
+  {
+    "objectID": "psychometric-results.html#basic",
+    "href": "psychometric-results.html#basic",
+    "title": "Psychometric results",
+    "section": "",
+    "text": "Note. gm = gross motor, fm = fine motor, cg = problem-solving, ps = personal-social, and c = communication."
+  },
+  {
+    "objectID": "psychometric-results.html#cfa",
+    "href": "psychometric-results.html#cfa",
+    "title": "Psychometric results",
+    "section": "CFA",
+    "text": "CFA\n\nCFA fit indices (cached results)\n\n\n\n\n\n\n\n\nStandardized factor loadings (cached results)"
   }
 ]

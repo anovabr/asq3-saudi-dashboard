@@ -136,7 +136,7 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./item-bank.html" class="sidebar-item-text sidebar-link">
+  <a href="./content-validity.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Content review</span></a>
   </div>
 </li>
@@ -240,30 +240,30 @@ Problem-solving
 
 
 </main> <!-- /main -->
-<div id="page-loader" aria-live="polite" aria-label="Loading">
+<div id="page-loader">
+
   <div class="wheel"></div>
-  <div>Loading...</div>
+
+  <div>Loading ...</div>
+
 </div>
+
+
+
 <script>
-  window.addEventListener("load", function () {
-    var loader = document.getElementById("page-loader");
-    var sidebar = document.getElementById("quarto-sidebar");
 
-    if (sidebar && !document.getElementById("sidebar-signature")) {
-      var sig = document.createElement("div");
-      sig.id = "sidebar-signature";
-      sig.innerHTML = '<div class="name">🦆 Luis Anunciacao, PhD</div><div class="dt" id="sidebar-datetime"></div>';
-      sidebar.appendChild(sig);
+  document.addEventListener('DOMContentLoaded', function() {
 
-      var dt = document.getElementById("sidebar-datetime");
-      var now = new Date();
-      dt.textContent = now.toLocaleString();
+    var loader = document.getElementById('page-loader');
+
+    if (loader) {
+
+      loader.classList.add('hidden');
+
     }
 
-    if (!loader) return;
-    loader.classList.add("hidden");
-    setTimeout(function () { loader.remove(); }, 250);
   });
+
 </script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
