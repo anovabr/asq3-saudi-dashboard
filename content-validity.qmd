@@ -328,7 +328,7 @@ format:
 // ══════════════════════════════════════════════════════════════════════════════
 // CONFIGURATION — replace this URL after deploying your Google Apps Script
 // ══════════════════════════════════════════════════════════════════════════════
-const SHEETS_URL = 'AKfycbyrShd-UjROEq_hUefLuoqnUyTEZFfUgHvvJln6AePcO_YQHmW6vY_93tDYwnCfAeF2PQ';
+const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyrShd-UjROEq_hUefLuoqnUyTEZFfUgHvvJln6AePcO_YQHmW6vY_93tDYwnCfAeF2PQ/exec';
 
 // ── CSV parser ────────────────────────────────────────────────────────────────
 function splitLine(line) {
