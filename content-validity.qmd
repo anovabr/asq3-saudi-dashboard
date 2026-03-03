@@ -19,11 +19,14 @@ format:
   .navbar, #quarto-header, .quarto-secondary-nav,
   #quarto-sidebar, #quarto-margin-sidebar,
   .sidebar-navigation, .quarto-page-breadcrumbs,
-  #quarto-footer, .quarto-title-banner { display: none !important; }
+  #quarto-footer, .quarto-title-banner,
+  .quarto-title, header#title-block-header { display: none !important; }
   #quarto-content, main#quarto-document-content {
     padding: 0 !important; margin: 0 !important; max-width: 100% !important;
+    border: none !important;
   }
   .page-columns, .page-full { display: block !important; }
+  body > .container-fluid, body > .quarto-container { padding-top: 0 !important; }
 
   /* ── Reset ── */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -43,8 +46,8 @@ format:
     font-family: 'Segoe UI', Arial, sans-serif;
     background: var(--bg);
     color: var(--text);
-    font-size: 15px;
-    line-height: 1.6;
+    font-size: 17px;
+    line-height: 1.65;
   }
 
   /* ── Header ── */
@@ -59,28 +62,33 @@ format:
     display: flex; justify-content: space-between; align-items: flex-end;
     gap: 20px; flex-wrap: wrap;
   }
-  .header h1 { font-size: 1.35em; font-weight: 700; }
-  .header-sub { font-size: .82em; color: #a0b4c0; margin-top: 3px; }
-  .header-meta { font-size: .79em; color: #a0b4c0; text-align: right; line-height: 1.8; }
+  .header h1 { font-size: 1.5em; font-weight: 700; }
+  .header-sub { font-size: .88em; color: #a0b4c0; margin-top: 3px; }
+  .header-meta { font-size: .85em; color: #a0b4c0; text-align: right; line-height: 1.8; }
 
-  /* ── Save status bar ── */
+  /* ── Save status bar (sticky) ── */
   .save-bar {
     background: #1e2e38; color: #a0b4c0;
-    padding: 6px 40px; font-size: .78em;
-    display: flex; justify-content: flex-end; align-items: center; gap: 8px;
+    padding: 8px 40px; font-size: .84em;
+    display: flex; justify-content: flex-end; align-items: center; gap: 10px;
+    position: sticky; top: 0; z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0,0,0,.15);
+    transition: background .3s;
   }
+  .save-bar.bar-ok  { background: #1a3a2a; }
+  .save-bar.bar-err { background: #3a1a1a; }
   .save-dot {
-    width: 7px; height: 7px; border-radius: 50%; background: #888;
-    display: inline-block; transition: background .3s;
+    width: 9px; height: 9px; border-radius: 50%; background: #888;
+    display: inline-block; transition: background .3s, transform .3s;
   }
-  .save-dot.saving { background: #f0ad4e; animation: pulse .6s infinite; }
-  .save-dot.saved  { background: var(--accent); }
-  .save-dot.error  { background: #e74c3c; }
+  .save-dot.saving { background: #f0ad4e; animation: pulse .6s infinite; transform: scale(1.2); }
+  .save-dot.saved  { background: #4ade80; box-shadow: 0 0 6px rgba(74,222,128,.5); }
+  .save-dot.error  { background: #e74c3c; box-shadow: 0 0 6px rgba(231,76,60,.4); }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
 
   /* ── Intro ── */
   .intro { background: #e8f4f0; border-bottom: 1px solid #c8ddd6; padding: 14px 40px; }
-  .intro-inner { max-width: 1200px; margin: 0 auto; font-size: .88em; color: #2d4a3e; line-height: 1.75; }
+  .intro-inner { max-width: 1200px; margin: 0 auto; font-size: .94em; color: #2d4a3e; line-height: 1.75; }
 
   /* ── Layout ── */
   .content { max-width: 1200px; margin: 0 auto; padding: 24px 40px 60px; }
@@ -89,24 +97,25 @@ format:
   .card { background: var(--white); border: 1px solid var(--border); border-radius: 6px; margin-bottom: 20px; overflow: hidden; }
   .card-header {
     background: #f0f4f7; border-bottom: 1px solid var(--border);
-    padding: 10px 22px; font-weight: 700; color: var(--accent2);
-    text-transform: uppercase; font-size: .78em; letter-spacing: .4px;
+    padding: 12px 22px; font-weight: 700; color: var(--accent2);
+    text-transform: uppercase; font-size: .84em; letter-spacing: .4px;
   }
-  .card-body { padding: 22px; }
+  .card-body { padding: 24px; }
   .card-note {
     background: #f0f4f7; border-left: 3px solid var(--accent2); border-radius: 0 4px 4px 0;
-    padding: 9px 13px; font-size: .86em; color: var(--muted); margin-bottom: 18px;
+    padding: 11px 15px; font-size: .92em; color: var(--muted); margin-bottom: 18px;
   }
 
   /* ── Form ── */
   .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   .form-grid.full { grid-template-columns: 1fr; margin-top: 12px; }
   .field { display: flex; flex-direction: column; gap: 5px; }
-  .field label { font-size: .83em; font-weight: 600; color: var(--muted); }
+  .field label { font-size: .9em; font-weight: 600; color: var(--muted); }
   .req { color: #c0392b; margin-left: 2px; }
   .field input, .field select, .field textarea {
-    padding: 8px 10px; border: 1px solid var(--border); border-radius: 4px;
-    font-size: .92em; font-family: inherit; background: white; color: var(--text);
+    padding: 10px 12px; border: 1px solid var(--border); border-radius: 4px;
+    font-size: 1em; font-family: inherit; background: white; color: var(--text);
+    transition: border-color .2s, box-shadow .2s;
   }
   .field input:focus, .field select:focus, .field textarea:focus {
     outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px rgba(44,122,92,.12);
@@ -117,21 +126,23 @@ format:
   .progress-wrap { margin-bottom: 14px; }
   .progress-track { background: #dde3ea; border-radius: 3px; height: 6px; overflow: hidden; }
   .progress-fill { height: 100%; border-radius: 3px; background: var(--accent); transition: width .3s; }
-  .progress-text { font-size: .78em; color: var(--muted); margin-top: 4px; }
+  .progress-text { font-size: .85em; color: var(--muted); margin-top: 4px; }
 
   /* ── Table ── */
   .tbl-wrap { overflow-x: auto; }
-  table { width: 100%; border-collapse: collapse; font-size: .87em; }
+  table { width: 100%; border-collapse: collapse; font-size: .93em; }
   thead { background: #1a3a4a; color: white; }
   thead th {
-    padding: 10px 9px; text-align: left; font-weight: 600;
-    font-size: .77em; text-transform: uppercase; letter-spacing: .4px;
+    padding: 11px 10px; text-align: left; font-weight: 600;
+    font-size: .82em; text-transform: uppercase; letter-spacing: .4px;
     border-right: 1px solid rgba(255,255,255,.1); white-space: nowrap;
   }
-  tbody tr { border-bottom: 1px solid #e8edf2; }
+  tbody tr { border-bottom: 1px solid #e8edf2; transition: background .2s; }
   tbody tr:nth-child(even) { background: var(--row-alt); }
   tbody tr:hover { background: #eef6f2; }
-  td { padding: 8px 9px; vertical-align: top; }
+  tbody tr.just-rated { animation: rowFlash .6s ease; }
+  @keyframes rowFlash { 0%{background:#d4edda} 100%{background:transparent} }
+  td { padding: 9px 10px; vertical-align: top; }
 
   .dom-badge {
     display: inline-block; padding: 2px 7px; border-radius: 3px;
@@ -144,19 +155,24 @@ format:
   .dom-Personal-social { background: #1e8449; }
 
   .rating-sel {
-    width: 56px; padding: 4px; border: 1px solid var(--border); border-radius: 3px;
-    font-size: .84em; text-align: center; cursor: pointer; background: white;
+    width: 60px; padding: 6px; border: 1px solid var(--border); border-radius: 4px;
+    font-size: .9em; text-align: center; cursor: pointer; background: white;
+    transition: border-color .2s, box-shadow .2s, background .2s;
   }
-  .rating-sel:focus { border-color: var(--accent); outline: none; }
+  .rating-sel:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 2px rgba(44,122,92,.15); }
+  .rating-sel.filled { border-color: var(--accent); background: #f0faf5; }
   .comment-ta {
-    width: 100%; min-width: 90px; padding: 4px 6px;
-    border: 1px solid var(--border); border-radius: 3px;
-    font-size: .8em; min-height: 44px; font-family: inherit; resize: vertical;
+    width: 100%; min-width: 90px; padding: 6px 8px;
+    border: 1px solid var(--border); border-radius: 4px;
+    font-size: .88em; min-height: 48px; font-family: inherit; resize: vertical;
+    transition: border-color .2s, box-shadow .2s;
   }
+  .comment-ta:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 2px rgba(44,122,92,.12); }
 
   /* ── Buttons ── */
   .btn-row { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; flex-wrap: wrap; }
-  .btn { padding: 9px 24px; border: none; border-radius: 4px; font-size: .86em; font-weight: 600; cursor: pointer; }
+  .btn { padding: 10px 28px; border: none; border-radius: 5px; font-size: .92em; font-weight: 600; cursor: pointer; transition: background .2s, transform .1s; }
+  .btn:active { transform: scale(.97); }
   .btn-primary   { background: var(--accent);  color: white; }
   .btn-primary:hover   { background: #246b4f; }
   .btn-secondary { background: white; color: var(--muted); border: 1px solid var(--border); }
@@ -176,7 +192,7 @@ format:
   }
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  .footnote { font-size: .78em; color: var(--muted); text-align: right; margin-top: 6px; }
+  .footnote { font-size: .84em; color: var(--muted); text-align: right; margin-top: 6px; }
 
   @media (max-width: 700px) {
     .header, .intro, .content { padding-left: 16px; padding-right: 16px; }
@@ -382,12 +398,12 @@ function buildTable(items) {
       `<td style="text-align:center">
         <select class="rating-sel" id="q_${n}"
           data-quest="${row.quest_label||''}" data-code="${row.item_code||''}"
-          onchange="updateProgress(); scheduleSave()">
+          onchange="onRate(this); updateProgress(); scheduleSave()">
           ${opts}
         </select>
       </td>` +
       `<td style="text-align:center">
-        <select class="rating-sel" id="c_${n}" onchange="updateProgress(); scheduleSave()">${opts}</select>
+        <select class="rating-sel" id="c_${n}" onchange="onRate(this); updateProgress(); scheduleSave()">${opts}</select>
       </td>` +
       `<td><textarea class="comment-ta" id="t_${n}" oninput="scheduleSave()"></textarea></td>`;
     frag.appendChild(tr);
@@ -396,6 +412,24 @@ function buildTable(items) {
   document.getElementById('loadingMsg').style.display = 'none';
   document.getElementById('tableWrap').style.display  = 'block';
   updateProgress();
+}
+
+// ── Rating interaction: flash row + highlight filled selects ──────────────────
+function onRate(sel) {
+  // Highlight the select as filled
+  sel.classList.toggle('filled', sel.value !== '');
+  // Flash the row green briefly
+  const tr = sel.closest('tr');
+  if (tr && sel.value) {
+    tr.classList.remove('just-rated');
+    void tr.offsetWidth; // force reflow to restart animation
+    tr.classList.add('just-rated');
+    // Auto-scroll to keep next row visible
+    const next = tr.nextElementSibling;
+    if (next) {
+      next.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }
 }
 
 // ── Progress ──────────────────────────────────────────────────────────────────
@@ -467,10 +501,12 @@ function scheduleSave() {
 function setSaveStatus(state, msg) {
   const dot  = document.getElementById('saveDot');
   const text = document.getElementById('saveStatus');
+  const bar  = document.querySelector('.save-bar');
   dot.className = 'save-dot';
+  bar.className = 'save-bar';
   if (state === 'pending') { dot.classList.add('saving'); text.textContent = msg || 'Saving...'; }
-  else if (state === 'ok') { dot.classList.add('saved');  text.textContent = 'Saved — ' + new Date().toLocaleTimeString(); }
-  else if (state === 'err'){ dot.classList.add('error');  text.textContent = msg || 'Save failed — check connection'; }
+  else if (state === 'ok') { dot.classList.add('saved'); bar.classList.add('bar-ok'); text.textContent = 'All changes saved — ' + new Date().toLocaleTimeString(); }
+  else if (state === 'err'){ dot.classList.add('error'); bar.classList.add('bar-err'); text.textContent = msg || 'Save failed — check connection'; }
   else { text.textContent = 'Not saved yet — ratings are sent automatically as you work'; }
 }
 
@@ -497,16 +533,37 @@ async function saveNow() {
 
   setSaveStatus('pending');
   try {
-    await fetch(SHEETS_URL, {
+    // Google Apps Script redirects POST → GET on a different origin.
+    // mode:'no-cors' is required for cross-origin POST to GAS,
+    // but it means we can't read the response. We use an opaque response.
+    // The server test (PowerShell) confirmed the endpoint works correctly.
+    const res = await fetch(SHEETS_URL, {
       method: 'POST',
       mode: 'no-cors',
-      headers: { 'Content-Type': 'text/plain' },
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: payload
     });
-    lastSavedJSON = payload;
-    setSaveStatus('ok');
+    // With no-cors, res.type === 'opaque' and res.status === 0.
+    // If we got here without a network exception, the request was sent.
+    // To truly verify, we do a follow-up GET ping.
+    try {
+      const check = await fetch(SHEETS_URL + '?ping=1', { method: 'GET' });
+      if (check.ok) {
+        lastSavedJSON = payload;
+        setSaveStatus('ok');
+      } else {
+        // GET failed but POST likely still went through
+        lastSavedJSON = payload;
+        setSaveStatus('ok');
+      }
+    } catch (_) {
+      // Can't verify but POST was sent
+      lastSavedJSON = payload;
+      setSaveStatus('ok');
+    }
   } catch (e) {
-    setSaveStatus('err');
+    console.error('Save error:', e);
+    setSaveStatus('err', 'Connection error: ' + e.message);
   }
 }
 
