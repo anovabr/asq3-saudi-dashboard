@@ -45,6 +45,17 @@ ul.task-list li input[type="checkbox"] {
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ASQ-3 Saudi — Expert Content Review</title>
 <style>
+  /* ── Strip ALL Quarto site chrome ── */
+  .navbar, #quarto-header, .quarto-secondary-nav,
+  #quarto-sidebar, #quarto-margin-sidebar,
+  .sidebar-navigation, .quarto-page-breadcrumbs,
+  #quarto-footer, .quarto-title-banner { display: none !important; }
+  #quarto-content, main#quarto-document-content {
+    padding: 0 !important; margin: 0 !important; max-width: 100% !important;
+  }
+  .page-columns, .page-full { display: block !important; }
+
+  /* ── Reset ── */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
@@ -70,131 +81,91 @@ ul.task-list li input[type="checkbox"] {
   .header {
     background: #1a3a4a;
     color: white;
-    padding: 28px 40px 24px;
+    padding: 24px 40px 20px;
     border-bottom: 4px solid var(--accent);
   }
   .header-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: 24px;
-    flex-wrap: wrap;
+    max-width: 1200px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: flex-end;
+    gap: 20px; flex-wrap: wrap;
   }
-  .header h1 { font-size: 1.4em; font-weight: 700; letter-spacing: .2px; }
-  .header-sub { font-size: .83em; color: #a0b4c0; margin-top: 4px; font-weight: 400; }
-  .header-meta { font-size: .8em; color: #a0b4c0; text-align: right; line-height: 1.7; }
+  .header h1 { font-size: 1.35em; font-weight: 700; }
+  .header-sub { font-size: .82em; color: #a0b4c0; margin-top: 3px; }
+  .header-meta { font-size: .79em; color: #a0b4c0; text-align: right; line-height: 1.8; }
 
-  /* ── Intro strip ── */
-  .intro {
-    background: #e8f4f0;
-    border-bottom: 1px solid #c8ddd6;
-    padding: 16px 40px;
+  /* ── Save status bar ── */
+  .save-bar {
+    background: #1e2e38; color: #a0b4c0;
+    padding: 6px 40px; font-size: .78em;
+    display: flex; justify-content: flex-end; align-items: center; gap: 8px;
   }
-  .intro-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    font-size: .9em;
-    color: #2d4a3e;
-    line-height: 1.75;
+  .save-dot {
+    width: 7px; height: 7px; border-radius: 50%; background: #888;
+    display: inline-block; transition: background .3s;
   }
+  .save-dot.saving { background: #f0ad4e; animation: pulse .6s infinite; }
+  .save-dot.saved  { background: var(--accent); }
+  .save-dot.error  { background: #e74c3c; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+  /* ── Intro ── */
+  .intro { background: #e8f4f0; border-bottom: 1px solid #c8ddd6; padding: 14px 40px; }
+  .intro-inner { max-width: 1200px; margin: 0 auto; font-size: .88em; color: #2d4a3e; line-height: 1.75; }
 
   /* ── Layout ── */
-  .content { max-width: 1200px; margin: 0 auto; padding: 28px 40px 60px; }
+  .content { max-width: 1200px; margin: 0 auto; padding: 24px 40px 60px; }
 
   /* ── Cards ── */
-  .card {
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    margin-bottom: 24px;
-    overflow: hidden;
-  }
+  .card { background: var(--white); border: 1px solid var(--border); border-radius: 6px; margin-bottom: 20px; overflow: hidden; }
   .card-header {
-    background: #f0f4f7;
-    border-bottom: 1px solid var(--border);
-    padding: 12px 24px;
-    font-size: .95em;
-    font-weight: 700;
-    color: var(--accent2);
-    letter-spacing: .2px;
-    text-transform: uppercase;
-    font-size: .82em;
+    background: #f0f4f7; border-bottom: 1px solid var(--border);
+    padding: 10px 22px; font-weight: 700; color: var(--accent2);
+    text-transform: uppercase; font-size: .78em; letter-spacing: .4px;
   }
-  .card-body { padding: 24px; }
+  .card-body { padding: 22px; }
   .card-note {
-    background: #f0f4f7;
-    border-left: 3px solid var(--accent2);
-    padding: 10px 14px;
-    font-size: .87em;
-    color: var(--muted);
-    margin-bottom: 20px;
-    border-radius: 0 4px 4px 0;
+    background: #f0f4f7; border-left: 3px solid var(--accent2); border-radius: 0 4px 4px 0;
+    padding: 9px 13px; font-size: .86em; color: var(--muted); margin-bottom: 18px;
   }
 
   /* ── Form ── */
-  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-  .form-grid.full { grid-template-columns: 1fr; margin-top: 14px; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-grid.full { grid-template-columns: 1fr; margin-top: 12px; }
   .field { display: flex; flex-direction: column; gap: 5px; }
-  .field label { font-size: .85em; font-weight: 600; color: var(--muted); }
+  .field label { font-size: .83em; font-weight: 600; color: var(--muted); }
   .req { color: #c0392b; margin-left: 2px; }
   .field input, .field select, .field textarea {
-    padding: 9px 11px;
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    font-size: .93em;
-    font-family: inherit;
-    background: white;
-    color: var(--text);
-    transition: border-color .15s;
+    padding: 8px 10px; border: 1px solid var(--border); border-radius: 4px;
+    font-size: .92em; font-family: inherit; background: white; color: var(--text);
   }
   .field input:focus, .field select:focus, .field textarea:focus {
-    outline: none;
-    border-color: var(--accent);
-    box-shadow: 0 0 0 2px rgba(44,122,92,.12);
+    outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px rgba(44,122,92,.12);
   }
-  .field textarea { resize: vertical; min-height: 70px; }
+  .field textarea { resize: vertical; min-height: 68px; }
 
   /* ── Progress ── */
-  .progress-wrap { margin-bottom: 16px; }
-  .progress-track {
-    background: #dde3ea; border-radius: 3px; height: 7px; overflow: hidden;
-  }
-  .progress-fill {
-    height: 100%; border-radius: 3px;
-    background: var(--accent);
-    transition: width .35s ease;
-  }
-  .progress-text { font-size: .8em; color: var(--muted); margin-top: 5px; }
+  .progress-wrap { margin-bottom: 14px; }
+  .progress-track { background: #dde3ea; border-radius: 3px; height: 6px; overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 3px; background: var(--accent); transition: width .3s; }
+  .progress-text { font-size: .78em; color: var(--muted); margin-top: 4px; }
 
   /* ── Table ── */
   .tbl-wrap { overflow-x: auto; }
-  table { width: 100%; border-collapse: collapse; font-size: .88em; }
+  table { width: 100%; border-collapse: collapse; font-size: .87em; }
   thead { background: #1a3a4a; color: white; }
   thead th {
-    padding: 11px 10px;
-    text-align: left;
-    font-weight: 600;
-    font-size: .8em;
-    text-transform: uppercase;
-    letter-spacing: .4px;
-    border-right: 1px solid rgba(255,255,255,.12);
-    white-space: nowrap;
+    padding: 10px 9px; text-align: left; font-weight: 600;
+    font-size: .77em; text-transform: uppercase; letter-spacing: .4px;
+    border-right: 1px solid rgba(255,255,255,.1); white-space: nowrap;
   }
   tbody tr { border-bottom: 1px solid #e8edf2; }
   tbody tr:nth-child(even) { background: var(--row-alt); }
   tbody tr:hover { background: #eef6f2; }
-  td { padding: 9px 10px; vertical-align: top; }
+  td { padding: 8px 9px; vertical-align: top; }
 
   .dom-badge {
-    display: inline-block;
-    padding: 2px 7px;
-    border-radius: 3px;
-    font-size: .76em;
-    font-weight: 600;
-    color: white;
-    white-space: nowrap;
+    display: inline-block; padding: 2px 7px; border-radius: 3px;
+    font-size: .74em; font-weight: 600; color: white; white-space: nowrap;
   }
   .dom-Communication   { background: #2471a3; }
   .dom-Gross-motor     { background: #6e2fa0; }
@@ -203,51 +174,42 @@ ul.task-list li input[type="checkbox"] {
   .dom-Personal-social { background: #1e8449; }
 
   .rating-sel {
-    width: 58px; padding: 5px 4px;
-    border: 1px solid var(--border); border-radius: 3px;
-    font-size: .85em; text-align: center; cursor: pointer;
-    background: white;
+    width: 56px; padding: 4px; border: 1px solid var(--border); border-radius: 3px;
+    font-size: .84em; text-align: center; cursor: pointer; background: white;
   }
   .rating-sel:focus { border-color: var(--accent); outline: none; }
-
   .comment-ta {
-    width: 100%; min-width: 100px; padding: 5px 7px;
+    width: 100%; min-width: 90px; padding: 4px 6px;
     border: 1px solid var(--border); border-radius: 3px;
-    font-size: .82em; min-height: 48px;
-    font-family: inherit; resize: vertical;
+    font-size: .8em; min-height: 44px; font-family: inherit; resize: vertical;
   }
 
   /* ── Buttons ── */
-  .btn-row { display: flex; gap: 12px; justify-content: flex-end; margin-top: 24px; flex-wrap: wrap; }
-  .btn {
-    padding: 10px 28px; border: none; border-radius: 4px;
-    font-size: .88em; font-weight: 600; cursor: pointer; letter-spacing: .2px;
-  }
-  .btn-primary { background: var(--accent); color: white; }
-  .btn-primary:hover { background: #246b4f; }
+  .btn-row { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; flex-wrap: wrap; }
+  .btn { padding: 9px 24px; border: none; border-radius: 4px; font-size: .86em; font-weight: 600; cursor: pointer; }
+  .btn-primary   { background: var(--accent);  color: white; }
+  .btn-primary:hover   { background: #246b4f; }
   .btn-secondary { background: white; color: var(--muted); border: 1px solid var(--border); }
   .btn-secondary:hover { background: var(--bg); }
 
   /* ── Alerts ── */
-  .alert { display: none; padding: 12px 16px; border-radius: 4px; margin-bottom: 20px; font-size: .88em; border-left: 4px solid; }
+  .alert { display: none; padding: 10px 14px; border-radius: 4px; margin-bottom: 16px; font-size: .86em; border-left: 4px solid; }
   .alert-ok  { background: #eaf6f0; border-color: var(--accent); color: #1e5c3a; }
   .alert-err { background: #fdf0ef; border-color: #c0392b;       color: #7b1c1c; }
 
   /* ── Spinner ── */
-  #loadingMsg { text-align: center; padding: 40px 20px; color: var(--muted); font-size: .9em; }
+  #loadingMsg { text-align: center; padding: 40px 20px; color: var(--muted); font-size: .88em; }
   .spinner {
-    width: 32px; height: 32px; margin: 0 auto 12px;
+    width: 30px; height: 30px; margin: 0 auto 10px;
     border: 3px solid #dde; border-top-color: var(--accent);
     border-radius: 50%; animation: spin .7s linear infinite;
   }
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  .footnote { font-size: .8em; color: var(--muted); text-align: right; margin-top: 8px; }
+  .footnote { font-size: .78em; color: var(--muted); text-align: right; margin-top: 6px; }
 
   @media (max-width: 700px) {
-    .header { padding: 20px; }
-    .intro  { padding: 14px 20px; }
-    .content { padding: 16px 20px 40px; }
+    .header, .intro, .content { padding-left: 16px; padding-right: 16px; }
     .form-grid { grid-template-columns: 1fr; }
   }
 </style>
@@ -259,54 +221,58 @@ ul.task-list li input[type="checkbox"] {
   <div class="header-inner">
     <div>
       <div class="header h1">ASQ-3 Saudi Arabic Validation — Expert Content Review</div>
-      <div class="header-sub">Ages &amp; Stages Questionnaires, Third Edition | University of Oregon</div>
+      <div class="header-sub">Ages &amp; Stages Questionnaires, Third Edition &nbsp;|&nbsp; University of Oregon</div>
     </div>
     <div class="header-meta">
-      632 items across 21 questionnaire forms<br>
-      5 developmental domains
+      632 items &nbsp;|&nbsp; 21 questionnaire forms &nbsp;|&nbsp; 5 developmental domains
     </div>
   </div>
+</div>
+
+<!-- SAVE STATUS BAR -->
+<div class="save-bar">
+  <span class="save-dot" id="saveDot"></span>
+  <span id="saveStatus">Not saved yet — ratings are sent automatically as you work</span>
 </div>
 
 <!-- INTRO -->
 <div class="intro">
   <div class="intro-inner">
-    <strong>Instructions:</strong> You are asked to evaluate each item of the Arabic version of the ASQ-3 for content validity.
-    For every item, provide an independent rating of <strong>Quality</strong> (the degree to which the item adequately represents its intended developmental domain)
-    and <strong>Clarity</strong> (the degree to which the item wording is comprehensible to Saudi Arabic-speaking parents).
-    Use the 5-point scale provided (1 = poor / 5 = excellent). Add comments where clinically relevant.
-    When finished, click <em>Download Ratings</em> to save your responses as a CSV file and email it to the research team.
+    <strong>Instructions:</strong> Evaluate each item of the Arabic ASQ-3 for content validity.
+    Rate each item on <strong>Quality</strong> (adequacy for the intended developmental domain)
+    and <strong>Clarity</strong> (comprehensibility to Saudi Arabic-speaking parents) using the 5-point scale.
+    Add comments where clinically relevant.
+    <strong>Your ratings are saved automatically</strong> — no need to download or send anything.
   </div>
 </div>
 
 <div class="content">
 
-  <!-- ALERTS -->
   <div id="alertOk" class="alert alert-ok"></div>
   <div id="alertErr" class="alert alert-err"></div>
 
-  <!-- CREDENTIALS -->
+  <!-- SECTION 1 — CREDENTIALS -->
   <div class="card">
     <div class="card-header">Section 1 — Reviewer Information</div>
     <div class="card-body">
-      <div class="card-note">All fields marked with * are required and will be included in the exported data file.</div>
+      <div class="card-note">All fields marked with * are required. This information is included in the saved data.</div>
       <form id="expertForm">
         <div class="form-grid">
           <div class="field">
             <label>Full Name <span class="req">*</span></label>
-            <input type="text" id="fullName" required="" placeholder="As it appears in publications">
+            <input type="text" id="fullName" required="" placeholder="As it appears in publications" oninput="scheduleSave()">
           </div>
           <div class="field">
             <label>Email <span class="req">*</span></label>
-            <input type="email" id="email" required="" placeholder="institutional email preferred">
+            <input type="email" id="email" required="" placeholder="institutional email preferred" oninput="scheduleSave()">
           </div>
           <div class="field">
             <label>Institution / Organization</label>
-            <input type="text" id="institution" placeholder="e.g., King Abdulaziz University">
+            <input type="text" id="institution" placeholder="e.g., King Abdulaziz University" oninput="scheduleSave()">
           </div>
           <div class="field">
             <label>Primary Field of Expertise <span class="req">*</span></label>
-            <select id="expertise" required="">
+            <select id="expertise" required="" onchange="scheduleSave()">
               <option value="">— Select —</option>
               <option value="child_development">Child Development / Developmental Psychology</option>
               <option value="pediatrics">Pediatrics / Pediatric Medicine</option>
@@ -320,11 +286,11 @@ ul.task-list li input[type="checkbox"] {
           </div>
           <div class="field">
             <label>Years of Professional Experience <span class="req">*</span></label>
-            <input type="number" id="yearsExperience" min="0" max="60" placeholder="e.g., 15" required="">
+            <input type="number" id="yearsExperience" min="0" max="60" placeholder="e.g., 15" required="" oninput="scheduleSave()">
           </div>
           <div class="field">
             <label>Arabic Language Proficiency <span class="req">*</span></label>
-            <select id="language" required="">
+            <select id="language" required="" onchange="scheduleSave()">
               <option value="">— Select —</option>
               <option value="native">Native Speaker</option>
               <option value="fluent">Fluent / Proficient</option>
@@ -336,22 +302,20 @@ ul.task-list li input[type="checkbox"] {
         <div class="form-grid full">
           <div class="field">
             <label>Additional Background <span style="font-weight:400;color:#999">(optional)</span></label>
-            <textarea id="additionalInfo" placeholder="Relevant certifications, subspecialties, or research experience"></textarea>
+            <textarea id="additionalInfo" placeholder="Relevant certifications, subspecialties, or research experience" oninput="scheduleSave()"></textarea>
           </div>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- ITEMS -->
+  <!-- SECTION 2 — ITEMS -->
   <div class="card">
-    <div class="card-header">Section 2 — Item Ratings (Quality and Clarity, 1–5)</div>
+    <div class="card-header">Section 2 — Item Ratings</div>
     <div class="card-body">
       <div class="card-note">
-        <strong>Quality:</strong> Does this item adequately measure its stated developmental domain?
-        &nbsp;|&nbsp;
-        <strong>Clarity:</strong> Is the item wording clear and comprehensible to Saudi Arabic-speaking parents?
-        &nbsp;|&nbsp;
+        <strong>Quality:</strong> Does this item adequately measure its stated developmental domain? &nbsp;|&nbsp;
+        <strong>Clarity:</strong> Is the item wording clear and comprehensible to Saudi Arabic-speaking parents?<br>
         Scale: 1 = Poor &nbsp; 2 = Below average &nbsp; 3 = Adequate &nbsp; 4 = Good &nbsp; 5 = Excellent
       </div>
 
@@ -360,10 +324,7 @@ ul.task-list li input[type="checkbox"] {
         <div class="progress-text" id="progressText">0 of 0 items rated</div>
       </div>
 
-      <div id="loadingMsg">
-        <div class="spinner"></div>
-        Loading items...
-      </div>
+      <div id="loadingMsg"><div class="spinner"></div>Loading items...</div>
 
       <div class="tbl-wrap" id="tableWrap" style="display:none">
         
@@ -381,7 +342,7 @@ ul.task-list li input[type="checkbox"] {
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th" style="width: 7%">Month</th>
-<th data-quarto-table-cell-role="th" style="width: 13%">Domain</th>
+<th data-quarto-table-cell-role="th" style="width: 12%">Domain</th>
 <th data-quarto-table-cell-role="th" style="width: 5%">Code</th>
 <th data-quarto-table-cell-role="th" style="width: 24%">Arabic Item</th>
 <th data-quarto-table-cell-role="th" style="width: 23%">English Item</th>
@@ -389,7 +350,7 @@ ul.task-list li input[type="checkbox"] {
 (1–5)</th>
 <th data-quarto-table-cell-role="th" style="text-align: center; width: 8%;">Clarity<br>
 (1–5)</th>
-<th data-quarto-table-cell-role="th" style="width: 12%">Comments</th>
+<th data-quarto-table-cell-role="th" style="width: 13%">Comments</th>
 </tr>
 </thead>
 <tbody id="tbody">
@@ -400,15 +361,20 @@ ul.task-list li input[type="checkbox"] {
 
       <div class="btn-row">
         <button class="btn btn-secondary" type="button" onclick="resetForm()">Clear All</button>
-        <button class="btn btn-primary" type="button" onclick="downloadCSV()">Download Ratings</button>
+        <button class="btn btn-primary" type="button" onclick="saveNow()">Save Now</button>
       </div>
-      <p class="footnote">After downloading, please email the CSV file to the research team.</p>
+      <p class="footnote">Ratings are also saved automatically every time you make a change.</p>
     </div>
   </div>
 
-</div><!-- /content -->
+</div>
 
 <script>
+// ══════════════════════════════════════════════════════════════════════════════
+// CONFIGURATION — replace this URL after deploying your Google Apps Script
+// ══════════════════════════════════════════════════════════════════════════════
+const SHEETS_URL = 'PASTE_YOUR_APPS_SCRIPT_URL_HERE';
+
 // ── CSV parser ────────────────────────────────────────────────────────────────
 function splitLine(line) {
   const cols = []; let cur = '', inQ = false;
@@ -447,38 +413,33 @@ function buildTable(items) {
   const tbody = document.getElementById('tbody');
   const opts = '<option value="">—</option>' +
     [1,2,3,4,5].map(n => `<option value="${n}">${n}</option>`).join('');
-
   const frag = document.createDocumentFragment();
   items.forEach((row, i) => {
-    const n   = i + 1;
-    const dc  = domClass[row.domain] || '';
-    const badge = dc
-      ? `<span class="dom-badge ${dc}">${row.domain}</span>`
-      : (row.domain || '');
+    const n  = i + 1;
+    const dc = domClass[row.domain] || '';
     const tr = document.createElement('tr');
     tr.innerHTML =
-      `<td style="font-size:.82em;white-space:nowrap">${row.quest_label || ''}</td>` +
-      `<td>${badge}</td>` +
-      `<td style="font-size:.82em"><code>${row.item_code || ''}</code></td>` +
-      `<td dir="rtl" lang="ar" style="text-align:right">${row.item_text_ar || ''}</td>` +
-      `<td>${row.item_text_en || ''}</td>` +
+      `<td style="font-size:.81em;white-space:nowrap">${row.quest_label||''}</td>` +
+      `<td>${dc ? `<span class="dom-badge ${dc}">${row.domain}</span>` : (row.domain||'')}</td>` +
+      `<td style="font-size:.8em"><code>${row.item_code||''}</code></td>` +
+      `<td dir="rtl" lang="ar" style="text-align:right">${row.item_text_ar||''}</td>` +
+      `<td>${row.item_text_en||''}</td>` +
       `<td style="text-align:center">
         <select class="rating-sel" id="q_${n}"
           data-quest="${row.quest_label||''}" data-code="${row.item_code||''}"
-          onchange="updateProgress()">
+          onchange="updateProgress(); scheduleSave()">
           ${opts}
         </select>
       </td>` +
       `<td style="text-align:center">
-        <select class="rating-sel" id="c_${n}" onchange="updateProgress()">${opts}</select>
+        <select class="rating-sel" id="c_${n}" onchange="updateProgress(); scheduleSave()">${opts}</select>
       </td>` +
-      `<td><textarea class="comment-ta" id="t_${n}"></textarea></td>`;
+      `<td><textarea class="comment-ta" id="t_${n}" oninput="scheduleSave()"></textarea></td>`;
     frag.appendChild(tr);
   });
   tbody.appendChild(frag);
-
-  document.getElementById('loadingMsg').style.display  = 'none';
-  document.getElementById('tableWrap').style.display   = 'block';
+  document.getElementById('loadingMsg').style.display = 'none';
+  document.getElementById('tableWrap').style.display  = 'block';
   updateProgress();
 }
 
@@ -486,17 +447,14 @@ function buildTable(items) {
 function updateProgress() {
   let rated = 0;
   for (let i = 1; i <= totalItems; i++) {
-    const q = document.getElementById('q_' + i);
-    const c = document.getElementById('c_' + i);
-    if (q?.value && c?.value) rated++;
+    if (document.getElementById('q_'+i)?.value && document.getElementById('c_'+i)?.value) rated++;
   }
-  const pct = totalItems ? Math.round(rated / totalItems * 100) : 0;
+  const pct = totalItems ? Math.round(rated/totalItems*100) : 0;
   document.getElementById('progressFill').style.width = pct + '%';
-  document.getElementById('progressText').textContent =
-    `${rated} of ${totalItems} items rated (${pct}%)`;
+  document.getElementById('progressText').textContent = `${rated} of ${totalItems} items rated (${pct}%)`;
 }
 
-// ── Load CSV ──────────────────────────────────────────────────────────────────
+// ── Load items ────────────────────────────────────────────────────────────────
 (async function () {
   const paths = ['data/item_quality_template.csv', 'item_quality_template.csv'];
   for (const p of paths) {
@@ -505,77 +463,107 @@ function updateProgress() {
       if (!res.ok) continue;
       const items = parseCSV(await res.text()).filter(r => r.item_code);
       if (items.length > 0) { buildTable(items); return; }
-    } catch (_) { /* try next path */ }
+    } catch (_) { }
   }
   document.getElementById('loadingMsg').innerHTML =
-    '<p style="color:#c0392b;font-size:.9em">Items could not be loaded. ' +
-    'Please open this page through a web server, not as a local file.</p>';
+    '<p style="color:#c0392b;font-size:.88em">Items could not be loaded. Please open this page through a web server.</p>';
 })();
 
+// ── Collect current data ──────────────────────────────────────────────────────
+const $v = id => document.getElementById(id)?.value?.trim() || '';
+function collectData() {
+  const expert = {
+    name:        $v('fullName'),
+    email:       $v('email'),
+    institution: $v('institution'),
+    expertise:   $v('expertise'),
+    years:       $v('yearsExperience'),
+    language:    $v('language'),
+    background:  $v('additionalInfo')
+  };
+  const ratings = [];
+  for (let i = 1; i <= totalItems; i++) {
+    const q = document.getElementById('q_'+i);
+    const c = document.getElementById('c_'+i);
+    const t = document.getElementById('t_'+i);
+    if (q?.value || c?.value || t?.value) {
+      ratings.push({
+        quest_label: q?.getAttribute('data-quest') || '',
+        item_code:   q?.getAttribute('data-code')  || '',
+        quality:     q?.value  || '',
+        clarity:     c?.value  || '',
+        comment:     t?.value?.trim() || ''
+      });
+    }
+  }
+  return { expert, ratings, timestamp: new Date().toISOString() };
+}
+
+// ── Auto-save (debounced) ─────────────────────────────────────────────────────
+let saveTimer = null;
+function scheduleSave() {
+  clearTimeout(saveTimer);
+  setSaveStatus('pending');
+  saveTimer = setTimeout(saveNow, 2000);
+}
+
+function setSaveStatus(state) {
+  const dot  = document.getElementById('saveDot');
+  const text = document.getElementById('saveStatus');
+  dot.className = 'save-dot';
+  if (state === 'pending') { dot.classList.add('saving'); text.textContent = 'Saving...'; }
+  else if (state === 'ok') { dot.classList.add('saved');  text.textContent = 'Saved — ' + new Date().toLocaleTimeString(); }
+  else if (state === 'err'){ dot.classList.add('error');  text.textContent = 'Save failed — check connection'; }
+  else { text.textContent = 'Not saved yet — ratings are sent automatically as you work'; }
+}
+
+async function saveNow() {
+  if (SHEETS_URL === 'PASTE_YOUR_APPS_SCRIPT_URL_HERE') {
+    setSaveStatus('err');
+    return;
+  }
+  const data = collectData();
+  if (!data.expert.name || !data.expert.email) {
+    setSaveStatus(null); return;   // don't save until reviewer is identified
+  }
+  setSaveStatus('pending');
+  try {
+    await fetch(SHEETS_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    setSaveStatus('ok');
+  } catch (e) {
+    setSaveStatus('err');
+  }
+}
+
 // ── Validation ────────────────────────────────────────────────────────────────
-const $ = id => document.getElementById(id);
 function validate() {
-  const g = id => $(id).value.trim();
-  if (!g('fullName'))        { showErr('Full Name is required.');                   return false; }
-  if (!/\S+@\S+\.\S+/.test(g('email'))) { showErr('A valid Email is required.');  return false; }
-  if (!g('expertise'))       { showErr('Field of Expertise is required.');          return false; }
-  if (!g('yearsExperience')) { showErr('Years of Experience is required.');         return false; }
-  if (!g('language'))        { showErr('Arabic Language Proficiency is required.'); return false; }
+  if (!$v('fullName'))        { showErr('Full Name is required.');                   return false; }
+  if (!/\S+@\S+\.\S+/.test($v('email'))) { showErr('A valid Email is required.');  return false; }
+  if (!$v('expertise'))       { showErr('Field of Expertise is required.');          return false; }
+  if (!$v('yearsExperience')) { showErr('Years of Experience is required.');         return false; }
+  if (!$v('language'))        { showErr('Arabic Language Proficiency is required.'); return false; }
   return true;
 }
 function showErr(msg) {
-  $('alertErr').textContent = msg; $('alertErr').style.display = 'block';
-  $('alertOk').style.display = 'none';
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-function showOk(msg) {
-  $('alertOk').textContent = msg; $('alertOk').style.display = 'block';
-  $('alertErr').style.display = 'none';
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-// ── Download ──────────────────────────────────────────────────────────────────
-const esc = v => {
-  const s = String(v ?? '');
-  return (s.includes(',') || s.includes('"') || s.includes('\n'))
-    ? '"' + s.replace(/"/g, '""') + '"' : s;
-};
-function downloadCSV() {
-  if (!validate()) return;
-  const g = id => $(id).value.trim();
-  const meta = [g('fullName'), g('email'), g('institution'),
-                g('expertise'), g('yearsExperience'), g('language')];
-  const rows = [['reviewer_name','reviewer_email','institution','expertise',
-                 'years_experience','language','quest_label','item_code',
-                 'quality','clarity','comments']];
-  for (let i = 1; i <= totalItems; i++) {
-    const q = $('q_' + i);
-    rows.push([
-      ...meta.map(esc),
-      esc(q?.getAttribute('data-quest') || ''),
-      esc(q?.getAttribute('data-code')  || ''),
-      $('q_' + i)?.value || '',
-      $('c_' + i)?.value || '',
-      esc($('t_' + i)?.value || '')
-    ]);
-  }
-  const blob = new Blob(['\uFEFF' + rows.map(r => r.join(',')).join('\n')],
-                        { type: 'text/csv;charset=utf-8;' });
-  const a = Object.assign(document.createElement('a'), {
-    href: URL.createObjectURL(blob),
-    download: 'asq3_review_' + g('fullName').replace(/\s+/g,'_') + '.csv'
-  });
-  document.body.appendChild(a); a.click(); document.body.removeChild(a);
-  showOk('Ratings downloaded successfully. Please email the CSV file to the research team. Thank you, ' + g('fullName') + '.');
+  const el = document.getElementById('alertErr');
+  el.textContent = msg; el.style.display = 'block';
+  document.getElementById('alertOk').style.display = 'none';
+  window.scrollTo({ top:0, behavior:'smooth' });
 }
 
 // ── Reset ─────────────────────────────────────────────────────────────────────
 function resetForm() {
-  $('expertForm').reset();
+  document.getElementById('expertForm').reset();
   document.querySelectorAll('.rating-sel').forEach(el => el.value = '');
   document.querySelectorAll('.comment-ta').forEach(el => el.value  = '');
-  $('alertErr').style.display = 'none';
-  $('alertOk').style.display  = 'none';
+  document.getElementById('alertErr').style.display = 'none';
+  document.getElementById('alertOk').style.display  = 'none';
+  setSaveStatus(null);
   updateProgress();
 }
 </script>
