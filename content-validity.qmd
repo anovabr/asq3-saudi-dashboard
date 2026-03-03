@@ -7,16 +7,7 @@ execute:
   echo: false
   warning: false
   message: false
-  freeze: true
 ---
-
-```{r setup, include=FALSE}
-items <- read.csv("data/item_quality_template.csv", stringsAsFactors = FALSE, encoding = "UTF-8")
-items <- items[, c("quest", "quest_label", "domain", "item_code", "item_text_ar", "item_text_en")]
-items <- items[!is.na(items$item_code) & nchar(trimws(items$item_code)) > 0, ]
-items <- items[order(items$quest, items$domain, items$item_code), ]
-n_items <- nrow(items)
-```
 
 ```{css}
 :root {
@@ -26,34 +17,25 @@ n_items <- nrow(items)
   --dark-text: #333333;
   --border-gray: #CCCCCC;
 }
-
 * { margin: 0; padding: 0; box-sizing: border-box; }
-
 html, body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   background-color: var(--light-gray);
   color: var(--dark-text);
   line-height: 1.6;
 }
-
 .hero-section {
   background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-blue) 100%);
-  color: white;
-  padding: 60px 40px;
-  text-align: center;
-  margin-bottom: 50px;
+  color: white; padding: 60px 40px; text-align: center; margin-bottom: 50px;
 }
 .hero-section h1 { font-size: 2.5em; margin-bottom: 20px; font-weight: 700; }
-.hero-section p { font-size: 1.1em; max-width: 800px; margin: 0 auto; line-height: 1.8; opacity: 0.98; }
-
+.hero-section p { font-size: 1.1em; max-width: 800px; margin: 0 auto; line-height: 1.8; }
 .message-box {
   padding: 15px 20px; margin-bottom: 30px; border-radius: 4px;
   border-left: 5px solid var(--primary-green); background-color: #EAFAF3;
   color: #1a6643; display: none;
 }
-.message-box.success { display: block; }
-.message-box.error { border-left-color: #DC3545; background-color: #F8D7DA; color: #721C24; display: block; }
-
+.message-box.error { border-left-color: #DC3545; background-color: #F8D7DA; color: #721C24; }
 .section-box {
   background: white; margin-bottom: 40px; border-radius: 6px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1); padding: 40px;
@@ -66,23 +48,20 @@ html, body {
   color: #666; font-size: 0.95em; margin-bottom: 30px; padding: 15px;
   background-color: var(--light-gray); border-radius: 4px; border-left: 4px solid var(--secondary-blue);
 }
-
 .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 30px; }
 .form-grid.full { grid-template-columns: 1fr; }
 .form-group { display: flex; flex-direction: column; }
-.form-group label { font-weight: 600; margin-bottom: 8px; font-size: 0.95em; color: var(--dark-text); }
+.form-group label { font-weight: 600; margin-bottom: 8px; font-size: 0.95em; }
 .form-group label .required { color: #DC3545; margin-left: 3px; }
 .form-group input, .form-group select, .form-group textarea {
   padding: 12px 14px; border: 2px solid var(--border-gray); border-radius: 4px;
   font-size: 1em; font-family: inherit; background-color: white; color: var(--dark-text);
 }
 .form-group textarea { resize: vertical; min-height: 80px; }
-
 .table-wrapper { overflow-x: auto; margin-top: 30px; }
 .item-table { width: 100%; border-collapse: collapse; font-size: 0.95em; }
 .item-table thead { background-color: var(--primary-green); color: white; position: sticky; top: 0; z-index: 10; }
 .item-table thead th { padding: 15px 12px; text-align: left; font-weight: 600; border: 1px solid #999; }
-.item-table tbody tr { border-bottom: 1px solid #ddd; }
 .item-table tbody tr:nth-child(even) { background-color: #FAFAFA; }
 .item-table td { padding: 12px; border: 1px solid #ddd; }
 .rating-select { width: 70px; padding: 8px; border: 1px solid var(--border-gray); border-radius: 3px; font-size: 0.9em; }
@@ -90,7 +69,6 @@ html, body {
   width: 100%; padding: 8px; border: 1px solid var(--border-gray); border-radius: 3px;
   font-size: 0.85em; min-height: 60px; font-family: inherit; resize: vertical;
 }
-
 .button-container { display: flex; gap: 15px; justify-content: center; margin-top: 50px; flex-wrap: wrap; }
 .btn {
   padding: 14px 40px; border: none; border-radius: 4px; font-size: 1em;
@@ -102,13 +80,12 @@ html, body {
 .btn-secondary:hover { background-color: #3A7BC8; }
 .btn-download { background-color: #6c757d; color: white; }
 .btn-download:hover { background-color: #545b62; }
-
+#loadingMsg { text-align: center; padding: 30px; color: #666; font-size: 1.1em; }
 @media (max-width: 768px) {
   .form-grid { grid-template-columns: 1fr; }
   .section-box { padding: 20px; }
   .hero-section { padding: 40px 20px; }
   .hero-section h1 { font-size: 2em; }
-  .item-table { font-size: 0.85em; }
 }
 ```
 
@@ -125,7 +102,7 @@ html, body {
   </p>
 </div>
 
-<div id="successMessage" class="message-box success" style="display:none;"></div>
+<div id="successMessage" class="message-box" style="display:none;"></div>
 <div id="errorMessage" class="message-box error" style="display:none;"></div>
 
 <div class="section-box">
@@ -191,144 +168,167 @@ html, body {
     Scale: 1 = Poor/Unclear &nbsp;|&nbsp; 3 = Adequate &nbsp;|&nbsp; 5 = Excellent/Very Clear.
     Add comments as needed.
   </div>
-
-```{r table, results='asis'}
-cat('<div class="table-wrapper">\n')
-cat('<table class="item-table">\n')
-cat('  <thead>\n    <tr>\n')
-cat('      <th style="width:6%">Month</th>\n')
-cat('      <th style="width:12%">Domain</th>\n')
-cat('      <th style="width:6%">Code</th>\n')
-cat('      <th style="width:22%">Arabic Item</th>\n')
-cat('      <th style="width:22%">English Item</th>\n')
-cat('      <th style="width:10%;text-align:center">Quality<br>(1–5)</th>\n')
-cat('      <th style="width:10%;text-align:center">Clarity<br>(1–5)</th>\n')
-cat('      <th style="width:12%">Comments</th>\n')
-cat('    </tr>\n  </thead>\n  <tbody>\n')
-
-for (i in seq_len(nrow(items))) {
-  row <- items[i, ]
-  ar  <- if (is.na(row$item_text_ar)) "" else htmltools::htmlEscape(row$item_text_ar)
-  en  <- if (is.na(row$item_text_en)) "" else htmltools::htmlEscape(row$item_text_en)
-  cat(sprintf('    <tr>\n'))
-  cat(sprintf('      <td>%s</td>\n', row$quest_label))
-  cat(sprintf('      <td>%s</td>\n', row$domain))
-  cat(sprintf('      <td><strong>%s</strong></td>\n', row$item_code))
-  cat(sprintf('      <td dir="rtl" lang="ar">%s</td>\n', ar))
-  cat(sprintf('      <td>%s</td>\n', en))
-  cat(sprintf('      <td style="text-align:center"><select class="rating-select" id="quality_%d" data-item="%d" data-quest="%s" data-code="%s">\n', i, i, row$quest_label, row$item_code))
-  cat('        <option value="">--</option>\n')
-  for (r in 1:5) cat(sprintf('        <option value="%d">%d</option>\n', r, r))
-  cat('      </select></td>\n')
-  cat(sprintf('      <td style="text-align:center"><select class="rating-select" id="clarity_%d" data-item="%d">\n', i, i))
-  cat('        <option value="">--</option>\n')
-  for (r in 1:5) cat(sprintf('        <option value="%d">%d</option>\n', r, r))
-  cat('      </select></td>\n')
-  cat(sprintf('      <td><textarea class="comment-textarea" id="comment_%d"></textarea></td>\n', i))
-  cat('    </tr>\n')
-}
-
-cat('  </tbody>\n</table>\n</div>\n')
-```
-
+  <div id="loadingMsg">Loading items...</div>
+  <div class="table-wrapper" style="display:none;" id="tableWrapper">
+    <table class="item-table" id="itemTable">
+      <thead>
+        <tr>
+          <th style="width:8%">Month</th>
+          <th style="width:13%">Domain</th>
+          <th style="width:6%">Code</th>
+          <th style="width:23%">Arabic Item</th>
+          <th style="width:23%">English Item</th>
+          <th style="width:9%;text-align:center">Quality<br>(1–5)</th>
+          <th style="width:9%;text-align:center">Clarity<br>(1–5)</th>
+          <th style="width:9%">Comments</th>
+        </tr>
+      </thead>
+      <tbody id="itemTableBody"></tbody>
+    </table>
+  </div>
 </div>
 
 <div class="button-container">
   <button type="button" class="btn btn-secondary" onclick="resetForm()">Clear All</button>
   <button type="button" class="btn btn-download" onclick="downloadCSV()">Download My Ratings (CSV)</button>
 </div>
-
 <p style="text-align:center;margin-top:20px;color:#666;font-size:0.9em;">
   After downloading, please email your CSV file to the research team.
 </p>
 
 <script>
+// ── CSV parser ────────────────────────────────────────────────────────────────
+function parseCSV(text) {
+  const lines = text.trim().split('\n');
+  const headers = lines[0].split(',').map(h => h.replace(/^"|"$/g, '').trim());
+  return lines.slice(1).map(line => {
+    const cols = [];
+    let cur = '', inQ = false;
+    for (let i = 0; i < line.length; i++) {
+      const ch = line[i];
+      if (ch === '"') { inQ = !inQ; }
+      else if (ch === ',' && !inQ) { cols.push(cur); cur = ''; }
+      else { cur += ch; }
+    }
+    cols.push(cur);
+    const obj = {};
+    headers.forEach((h, i) => { obj[h] = (cols[i] || '').replace(/^"|"$/g, '').trim(); });
+    return obj;
+  });
+}
+
+// ── Build table from items array ──────────────────────────────────────────────
+function buildTable(items) {
+  const tbody = document.getElementById('itemTableBody');
+  const ratingOptions = '<option value="">--</option>' +
+    [1,2,3,4,5].map(n => `<option value="${n}">${n}</option>`).join('');
+
+  items.forEach((row, i) => {
+    const n = i + 1;
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${row.quest_label || ''}</td>
+      <td>${row.domain || ''}</td>
+      <td><strong>${row.item_code || ''}</strong></td>
+      <td dir="rtl" lang="ar">${row.item_text_ar || ''}</td>
+      <td>${row.item_text_en || ''}</td>
+      <td style="text-align:center">
+        <select class="rating-select" id="quality_${n}"
+          data-quest="${row.quest_label || ''}" data-code="${row.item_code || ''}">
+          ${ratingOptions}
+        </select>
+      </td>
+      <td style="text-align:center">
+        <select class="rating-select" id="clarity_${n}">${ratingOptions}</select>
+      </td>
+      <td><textarea class="comment-textarea" id="comment_${n}"></textarea></td>`;
+    tbody.appendChild(tr);
+  });
+
+  document.getElementById('loadingMsg').style.display = 'none';
+  document.getElementById('tableWrapper').style.display = 'block';
+}
+
+// ── Load CSV ──────────────────────────────────────────────────────────────────
+const csvPaths = ['data/item_quality_template.csv', 'item_quality_template.csv'];
+(async function loadItems() {
+  for (const path of csvPaths) {
+    try {
+      const res = await fetch(path);
+      if (!res.ok) continue;
+      const text = await res.text();
+      const items = parseCSV(text).filter(r => r.item_code);
+      buildTable(items);
+      return;
+    } catch(e) { continue; }
+  }
+  document.getElementById('loadingMsg').textContent =
+    'Could not load items. Please open this page from a web server.';
+})();
+
+// ── Form validation ───────────────────────────────────────────────────────────
 function validateExpertForm() {
-  const fullName = document.getElementById('fullName').value.trim();
-  const email = document.getElementById('email').value.trim();
-  const expertise = document.getElementById('expertise').value;
-  const yearsExperience = document.getElementById('yearsExperience').value;
-  const language = document.getElementById('language').value;
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!fullName) { showError('Full Name is required.'); return false; }
-  if (!email || !emailRegex.test(email)) { showError('A valid Email is required.'); return false; }
-  if (!expertise) { showError('Primary Field of Expertise is required.'); return false; }
-  if (yearsExperience === '' || isNaN(yearsExperience)) { showError('Years of Professional Experience is required.'); return false; }
-  if (!language) { showError('Arabic Language Proficiency is required.'); return false; }
+  const v = id => document.getElementById(id).value.trim();
+  const emailRx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!v('fullName'))                   { showError('Full Name is required.');                         return false; }
+  if (!emailRx.test(v('email')))        { showError('A valid Email is required.');                    return false; }
+  if (!v('expertise'))                  { showError('Field of Expertise is required.');                return false; }
+  if (!v('yearsExperience'))            { showError('Years of Experience is required.');               return false; }
+  if (!v('language'))                   { showError('Arabic Language Proficiency is required.');       return false; }
   return true;
 }
 
 function showError(msg) {
   const el = document.getElementById('errorMessage');
-  el.innerHTML = msg; el.style.display = 'block';
+  el.textContent = msg; el.style.display = 'block';
   document.getElementById('successMessage').style.display = 'none';
   window.scrollTo(0, 0);
 }
-
 function showSuccess(msg) {
   const el = document.getElementById('successMessage');
-  el.innerHTML = msg; el.style.display = 'block';
+  el.textContent = msg; el.style.display = 'block';
   document.getElementById('errorMessage').style.display = 'none';
   window.scrollTo(0, 0);
 }
 
-function downloadCSV() {
-  if (!validateExpertForm()) return;
-
-  const expert = {
-    fullName: document.getElementById('fullName').value.trim(),
-    email: document.getElementById('email').value.trim(),
-    institution: document.getElementById('institution').value.trim(),
-    expertise: document.getElementById('expertise').value,
-    yearsExperience: document.getElementById('yearsExperience').value,
-    language: document.getElementById('language').value,
-    additionalInfo: document.getElementById('additionalInfo').value.trim()
-  };
-
-  const rows = [['reviewer_name','reviewer_email','institution','expertise','years_experience','language','quest_label','item_code','quality','clarity','comments']];
-
-  document.querySelectorAll('.item-table tbody tr').forEach((tr, idx) => {
-    const n = idx + 1;
-    const qSel = document.getElementById('quality_' + n);
-    const cSel = document.getElementById('clarity_' + n);
-    const comm = document.getElementById('comment_' + n);
-    const questLabel = qSel ? qSel.getAttribute('data-quest') : '';
-    const itemCode  = qSel ? qSel.getAttribute('data-code')  : '';
-    rows.push([
-      csvEscape(expert.fullName),
-      csvEscape(expert.email),
-      csvEscape(expert.institution),
-      csvEscape(expert.expertise),
-      csvEscape(expert.yearsExperience),
-      csvEscape(expert.language),
-      csvEscape(questLabel),
-      csvEscape(itemCode),
-      qSel ? qSel.value : '',
-      cSel ? cSel.value : '',
-      comm ? csvEscape(comm.value.trim()) : ''
-    ]);
-  });
-
-  const csvContent = rows.map(r => r.join(',')).join('\n');
-  const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'asq3_review_' + expert.fullName.replace(/\s+/g, '_') + '.csv';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-  showSuccess('Your ratings have been downloaded. Please email the CSV file to the research team. Thank you, ' + expert.fullName + '!');
+// ── Download CSV ──────────────────────────────────────────────────────────────
+function csvEsc(v) {
+  const s = String(v ?? '');
+  return (s.includes(',') || s.includes('"') || s.includes('\n'))
+    ? '"' + s.replace(/"/g, '""') + '"' : s;
 }
 
-function csvEscape(val) {
-  if (val === null || val === undefined) return '';
-  const s = String(val);
-  if (s.includes(',') || s.includes('"') || s.includes('\n')) {
-    return '"' + s.replace(/"/g, '""') + '"';
-  }
-  return s;
+function downloadCSV() {
+  if (!validateExpertForm()) return;
+  const g = id => document.getElementById(id).value.trim();
+  const expert = {
+    name: g('fullName'), email: g('email'), institution: g('institution'),
+    expertise: g('expertise'), years: g('yearsExperience'), language: g('language')
+  };
+  const rows = [['reviewer_name','reviewer_email','institution','expertise',
+                 'years_experience','language','quest_label','item_code',
+                 'quality','clarity','comments']];
+  document.querySelectorAll('#itemTableBody tr').forEach((tr, i) => {
+    const n = i + 1;
+    const q = document.getElementById('quality_' + n);
+    rows.push([
+      csvEsc(expert.name), csvEsc(expert.email), csvEsc(expert.institution),
+      csvEsc(expert.expertise), csvEsc(expert.years), csvEsc(expert.language),
+      csvEsc(q ? q.getAttribute('data-quest') : ''),
+      csvEsc(q ? q.getAttribute('data-code')  : ''),
+      document.getElementById('quality_' + n)?.value  || '',
+      document.getElementById('clarity_' + n)?.value  || '',
+      csvEsc(document.getElementById('comment_' + n)?.value || '')
+    ]);
+  });
+  const blob = new Blob(['\uFEFF' + rows.map(r => r.join(',')).join('\n')],
+                        { type: 'text/csv;charset=utf-8;' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'asq3_review_' + expert.name.replace(/\s+/g, '_') + '.csv';
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a);
+  showSuccess('Ratings downloaded. Please email the CSV file to the research team. Thank you, ' + expert.name + '!');
 }
 
 function resetForm() {
