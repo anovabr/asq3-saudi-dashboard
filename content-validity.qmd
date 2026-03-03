@@ -18,312 +18,375 @@ format:
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --green:  #1DB584;
-    --blue:   #4A90E2;
-    --gray:   #F5F5F5;
-    --text:   #333333;
-    --border: #CCCCCC;
+    --accent:  #2C7A5C;
+    --accent2: #1a5276;
+    --bg:      #f4f6f8;
+    --white:   #ffffff;
+    --text:    #222222;
+    --muted:   #5a6472;
+    --border:  #d0d5dd;
+    --row-alt: #f9fafb;
   }
 
   body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-    background: var(--gray);
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: var(--bg);
     color: var(--text);
+    font-size: 15px;
     line-height: 1.6;
   }
 
-  /* ── Hero ── */
-  .hero {
-    background: linear-gradient(135deg, var(--green) 0%, var(--blue) 100%);
+  /* ── Header ── */
+  .header {
+    background: #1a3a4a;
     color: white;
-    padding: 64px 40px;
-    text-align: center;
+    padding: 28px 40px 24px;
+    border-bottom: 4px solid var(--accent);
   }
-  .hero h1 { font-size: 2.4em; font-weight: 800; margin-bottom: 16px; }
-  .hero p  { font-size: 1.05em; max-width: 820px; margin: 0 auto; line-height: 1.9; opacity: .97; }
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .header h1 { font-size: 1.4em; font-weight: 700; letter-spacing: .2px; }
+  .header-sub { font-size: .83em; color: #a0b4c0; margin-top: 4px; font-weight: 400; }
+  .header-meta { font-size: .8em; color: #a0b4c0; text-align: right; line-height: 1.7; }
+
+  /* ── Intro strip ── */
+  .intro {
+    background: #e8f4f0;
+    border-bottom: 1px solid #c8ddd6;
+    padding: 16px 40px;
+  }
+  .intro-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    font-size: .9em;
+    color: #2d4a3e;
+    line-height: 1.75;
+  }
+
+  /* ── Layout ── */
+  .content { max-width: 1200px; margin: 0 auto; padding: 28px 40px 60px; }
 
   /* ── Cards ── */
   .card {
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 2px 12px rgba(0,0,0,.09);
-    padding: 40px;
-    margin: 36px auto;
-    max-width: 1200px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 24px;
+    overflow: hidden;
   }
-  .card-title {
-    font-size: 1.5em;
+  .card-header {
+    background: #f0f4f7;
+    border-bottom: 1px solid var(--border);
+    padding: 12px 24px;
+    font-size: .95em;
     font-weight: 700;
-    color: var(--green);
-    padding-bottom: 14px;
-    margin-bottom: 16px;
-    border-bottom: 3px solid var(--blue);
+    color: var(--accent2);
+    letter-spacing: .2px;
+    text-transform: uppercase;
+    font-size: .82em;
   }
+  .card-body { padding: 24px; }
   .card-note {
-    background: var(--gray);
-    border-left: 4px solid var(--blue);
-    border-radius: 4px;
-    padding: 14px 16px;
-    color: #555;
-    font-size: .93em;
-    margin-bottom: 28px;
+    background: #f0f4f7;
+    border-left: 3px solid var(--accent2);
+    padding: 10px 14px;
+    font-size: .87em;
+    color: var(--muted);
+    margin-bottom: 20px;
+    border-radius: 0 4px 4px 0;
   }
 
-  /* ── Form grid ── */
-  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
-  .form-grid.full { grid-template-columns: 1fr; }
-  .field { display: flex; flex-direction: column; gap: 7px; }
-  .field label { font-weight: 600; font-size: .93em; }
-  .req { color: #e03; margin-left: 3px; }
+  /* ── Form ── */
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .form-grid.full { grid-template-columns: 1fr; margin-top: 14px; }
+  .field { display: flex; flex-direction: column; gap: 5px; }
+  .field label { font-size: .85em; font-weight: 600; color: var(--muted); }
+  .req { color: #c0392b; margin-left: 2px; }
   .field input, .field select, .field textarea {
-    padding: 11px 13px;
-    border: 2px solid var(--border);
-    border-radius: 6px;
-    font-size: 1em;
+    padding: 9px 11px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: .93em;
     font-family: inherit;
     background: white;
     color: var(--text);
-    transition: border-color .2s;
+    transition: border-color .15s;
   }
   .field input:focus, .field select:focus, .field textarea:focus {
     outline: none;
-    border-color: var(--green);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(44,122,92,.12);
   }
-  .field textarea { resize: vertical; min-height: 80px; }
+  .field textarea { resize: vertical; min-height: 70px; }
 
-  /* ── Progress bar ── */
-  .progress-bar-wrap {
-    background: #e5e5e5; border-radius: 99px; height: 10px;
-    margin-bottom: 6px; overflow: hidden;
+  /* ── Progress ── */
+  .progress-wrap { margin-bottom: 16px; }
+  .progress-track {
+    background: #dde3ea; border-radius: 3px; height: 7px; overflow: hidden;
   }
-  .progress-bar-fill {
-    height: 100%; border-radius: 99px;
-    background: linear-gradient(90deg, var(--green), var(--blue));
-    transition: width .4s ease;
+  .progress-fill {
+    height: 100%; border-radius: 3px;
+    background: var(--accent);
+    transition: width .35s ease;
   }
-  .progress-label { font-size: .85em; color: #666; text-align: right; margin-bottom: 20px; }
+  .progress-text { font-size: .8em; color: var(--muted); margin-top: 5px; }
 
   /* ── Table ── */
-  .tbl-wrap { overflow-x: auto; margin-top: 10px; }
-  table { width: 100%; border-collapse: collapse; font-size: .93em; }
-  thead { background: var(--green); color: white; position: sticky; top: 0; z-index: 10; }
-  th { padding: 13px 10px; text-align: left; font-weight: 600; border: 1px solid rgba(255,255,255,.25); }
-  td { padding: 10px; border: 1px solid #e0e0e0; vertical-align: top; }
-  tbody tr:nth-child(even) { background: #fafafa; }
-  tbody tr:hover { background: #f0f8f5; }
+  .tbl-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: .88em; }
+  thead { background: #1a3a4a; color: white; }
+  thead th {
+    padding: 11px 10px;
+    text-align: left;
+    font-weight: 600;
+    font-size: .8em;
+    text-transform: uppercase;
+    letter-spacing: .4px;
+    border-right: 1px solid rgba(255,255,255,.12);
+    white-space: nowrap;
+  }
+  tbody tr { border-bottom: 1px solid #e8edf2; }
+  tbody tr:nth-child(even) { background: var(--row-alt); }
+  tbody tr:hover { background: #eef6f2; }
+  td { padding: 9px 10px; vertical-align: top; }
 
-  .domain-badge {
+  .dom-badge {
     display: inline-block;
-    padding: 2px 8px;
-    border-radius: 99px;
-    font-size: .78em;
+    padding: 2px 7px;
+    border-radius: 3px;
+    font-size: .76em;
     font-weight: 600;
     color: white;
     white-space: nowrap;
   }
-  .dom-Communication   { background: #4A90E2; }
-  .dom-Gross-motor     { background: #E2844A; }
-  .dom-Fine-motor      { background: #9B59B6; }
-  .dom-Problem-solving { background: #E24A4A; }
-  .dom-Personal-social { background: #1DB584; }
+  .dom-Communication   { background: #2471a3; }
+  .dom-Gross-motor     { background: #6e2fa0; }
+  .dom-Fine-motor      { background: #b7770d; }
+  .dom-Problem-solving { background: #c0392b; }
+  .dom-Personal-social { background: #1e8449; }
 
   .rating-sel {
-    width: 64px; padding: 6px; border: 1.5px solid var(--border);
-    border-radius: 5px; font-size: .88em; text-align: center; cursor: pointer;
+    width: 58px; padding: 5px 4px;
+    border: 1px solid var(--border); border-radius: 3px;
+    font-size: .85em; text-align: center; cursor: pointer;
+    background: white;
   }
-  .rating-sel:focus { border-color: var(--green); outline: none; }
+  .rating-sel:focus { border-color: var(--accent); outline: none; }
+
   .comment-ta {
-    width: 100%; min-width: 110px; padding: 6px;
-    border: 1.5px solid var(--border); border-radius: 5px;
-    font-size: .82em; min-height: 54px; font-family: inherit; resize: vertical;
+    width: 100%; min-width: 100px; padding: 5px 7px;
+    border: 1px solid var(--border); border-radius: 3px;
+    font-size: .82em; min-height: 48px;
+    font-family: inherit; resize: vertical;
   }
 
   /* ── Buttons ── */
-  .btn-row { display: flex; gap: 14px; justify-content: center; margin-top: 48px; flex-wrap: wrap; }
+  .btn-row { display: flex; gap: 12px; justify-content: flex-end; margin-top: 24px; flex-wrap: wrap; }
   .btn {
-    padding: 13px 38px; border: none; border-radius: 6px;
-    font-size: .97em; font-weight: 700; cursor: pointer;
-    text-transform: uppercase; letter-spacing: .5px; transition: all .2s;
+    padding: 10px 28px; border: none; border-radius: 4px;
+    font-size: .88em; font-weight: 600; cursor: pointer; letter-spacing: .2px;
   }
-  .btn-green  { background: var(--green); color: white; }
-  .btn-green:hover  { background: #17a374; transform: translateY(-2px); box-shadow: 0 4px 14px rgba(29,181,132,.35); }
-  .btn-gray   { background: #6c757d; color: white; }
-  .btn-gray:hover   { background: #5a6268; transform: translateY(-2px); }
-  .btn-blue   { background: var(--blue); color: white; }
-  .btn-blue:hover   { background: #3a7bc8; transform: translateY(-2px); }
+  .btn-primary { background: var(--accent); color: white; }
+  .btn-primary:hover { background: #246b4f; }
+  .btn-secondary { background: white; color: var(--muted); border: 1px solid var(--border); }
+  .btn-secondary:hover { background: var(--bg); }
 
   /* ── Alerts ── */
-  .alert { display: none; padding: 15px 20px; border-radius: 6px; margin: 0 auto 24px; max-width: 1200px; border-left: 5px solid; }
-  .alert-success { background: #eafaf3; border-color: var(--green); color: #1a6643; }
-  .alert-error   { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+  .alert { display: none; padding: 12px 16px; border-radius: 4px; margin-bottom: 20px; font-size: .88em; border-left: 4px solid; }
+  .alert-ok  { background: #eaf6f0; border-color: var(--accent); color: #1e5c3a; }
+  .alert-err { background: #fdf0ef; border-color: #c0392b;       color: #7b1c1c; }
 
-  /* ── Loading spinner ── */
-  #loadingMsg { text-align: center; padding: 50px 20px; color: #888; }
+  /* ── Spinner ── */
+  #loadingMsg { text-align: center; padding: 40px 20px; color: var(--muted); font-size: .9em; }
   .spinner {
-    width: 40px; height: 40px; margin: 0 auto 14px;
-    border: 4px solid #ddd;
-    border-top-color: var(--green);
-    border-radius: 50%;
-    animation: spin .8s linear infinite;
+    width: 32px; height: 32px; margin: 0 auto 12px;
+    border: 3px solid #dde; border-top-color: var(--accent);
+    border-radius: 50%; animation: spin .7s linear infinite;
   }
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* ── Footer note ── */
-  .footnote { text-align: center; color: #888; font-size: .87em; margin-top: 16px; padding-bottom: 40px; }
+  .footnote { font-size: .8em; color: var(--muted); text-align: right; margin-top: 8px; }
 
-  @media (max-width: 720px) {
+  @media (max-width: 700px) {
+    .header { padding: 20px; }
+    .intro  { padding: 14px 20px; }
+    .content { padding: 16px 20px 40px; }
     .form-grid { grid-template-columns: 1fr; }
-    .card { padding: 22px; margin: 20px 12px; }
-    .hero { padding: 40px 20px; }
-    .hero h1 { font-size: 1.8em; }
   }
 </style>
 </head>
 <body>
 
-<!-- ═══════════════════ HERO ═══════════════════ -->
-<div class="hero">
-  <h1>Expert Content Review</h1>
-  <p>
-    Dear Researcher and Expert Reviewer,<br><br>
-    Thank you for contributing your expertise to the <strong>ASQ-3 Saudi Arabic validation study</strong>.
-    Your evaluation of each item is essential for ensuring that this developmental screening measure
-    is culturally appropriate, linguistically sound, and psychometrically reliable for use in the
-    Saudi Arabian context. Please rate each item on <em>quality</em> and <em>clarity</em>, then
-    download your ratings as a CSV file and email it to the research team.
-  </p>
-</div>
-
-<!-- ═══════════════════ ALERTS ═══════════════════ -->
-<div id="alertSuccess" class="alert alert-success"></div>
-<div id="alertError"   class="alert alert-error"></div>
-
-<!-- ═══════════════════ CREDENTIALS ═══════════════════ -->
-<div class="card">
-  <div class="card-title">Reviewer Credentials</div>
-  <div class="card-note">Please provide your professional information. Fields marked with <span style="color:#e03">*</span> are required.</div>
-  <form id="expertForm">
-    <div class="form-grid">
-      <div class="field">
-        <label>Full Name <span class="req">*</span></label>
-        <input type="text" id="fullName" required placeholder="Dr. / Prof. ...">
-      </div>
-      <div class="field">
-        <label>Email <span class="req">*</span></label>
-        <input type="email" id="email" required placeholder="you@institution.edu">
-      </div>
-      <div class="field">
-        <label>Institution / Organization</label>
-        <input type="text" id="institution" placeholder="e.g., King Abdulaziz University">
-      </div>
-      <div class="field">
-        <label>Primary Field of Expertise <span class="req">*</span></label>
-        <select id="expertise" required>
-          <option value="">— Select —</option>
-          <option value="child_development">Child Development / Developmental Psychology</option>
-          <option value="pediatrics">Pediatrics / Pediatric Medicine</option>
-          <option value="clinical_psychology">Clinical Psychology / Neuropsychology</option>
-          <option value="speech_language">Speech-Language Pathology</option>
-          <option value="special_education">Special Education</option>
-          <option value="occupational_therapy">Occupational Therapy</option>
-          <option value="education">Education / Early Childhood Education</option>
-          <option value="other">Other</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Years of Professional Experience <span class="req">*</span></label>
-        <input type="number" id="yearsExperience" min="0" placeholder="e.g., 15" required>
-      </div>
-      <div class="field">
-        <label>Arabic Language Proficiency <span class="req">*</span></label>
-        <select id="language" required>
-          <option value="">— Select —</option>
-          <option value="native">Native Speaker</option>
-          <option value="fluent">Fluent / Proficient</option>
-          <option value="intermediate">Intermediate</option>
-          <option value="basic">Basic</option>
-        </select>
-      </div>
+<!-- HEADER -->
+<div class="header">
+  <div class="header-inner">
+    <div>
+      <div class="header h1">ASQ-3 Saudi Arabic Validation — Expert Content Review</div>
+      <div class="header-sub">Ages &amp; Stages Questionnaires, Third Edition | University of Oregon</div>
     </div>
-    <div style="margin-top:18px;" class="form-grid full">
-      <div class="field">
-        <label>Additional Professional Background <span style="color:#999;font-weight:400">(optional)</span></label>
-        <textarea id="additionalInfo" placeholder="Relevant certifications, research experience, etc."></textarea>
-      </div>
+    <div class="header-meta">
+      632 items across 21 questionnaire forms<br>
+      5 developmental domains
     </div>
-  </form>
-</div>
-
-<!-- ═══════════════════ ITEMS ═══════════════════ -->
-<div class="card">
-  <div class="card-title">Item Evaluation</div>
-  <div class="card-note">
-    For each item, rate <strong>Quality</strong> (how well it measures its developmental domain) and
-    <strong>Clarity</strong> (how easily parents understand it).<br>
-    Scale: <strong>1</strong> = Poor/Unclear &nbsp;·&nbsp; <strong>3</strong> = Adequate &nbsp;·&nbsp; <strong>5</strong> = Excellent/Very Clear.
-    Add comments where needed.
-  </div>
-
-  <!-- progress -->
-  <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
-  <div class="progress-label" id="progressLabel">0 of 0 items rated</div>
-
-  <!-- table -->
-  <div id="loadingMsg">
-    <div class="spinner"></div>
-    Loading items…
-  </div>
-  <div class="tbl-wrap" id="tableWrap" style="display:none">
-    <table>
-      <thead>
-        <tr>
-          <th style="width:7%">Month</th>
-          <th style="width:13%">Domain</th>
-          <th style="width:6%">Code</th>
-          <th style="width:24%">Arabic Item</th>
-          <th style="width:23%">English Item</th>
-          <th style="width:8%;text-align:center">Quality<br>(1–5)</th>
-          <th style="width:8%;text-align:center">Clarity<br>(1–5)</th>
-          <th style="width:11%">Comments</th>
-        </tr>
-      </thead>
-      <tbody id="tbody"></tbody>
-    </table>
   </div>
 </div>
 
-<!-- ═══════════════════ BUTTONS ═══════════════════ -->
-<div class="btn-row">
-  <button class="btn btn-gray" onclick="resetForm()">Clear All</button>
-  <button class="btn btn-green" onclick="downloadCSV()">⬇ Download My Ratings (CSV)</button>
+<!-- INTRO -->
+<div class="intro">
+  <div class="intro-inner">
+    <strong>Instructions:</strong> You are asked to evaluate each item of the Arabic version of the ASQ-3 for content validity.
+    For every item, provide an independent rating of <strong>Quality</strong> (the degree to which the item adequately represents its intended developmental domain)
+    and <strong>Clarity</strong> (the degree to which the item wording is comprehensible to Saudi Arabic-speaking parents).
+    Use the 5-point scale provided (1 = poor / 5 = excellent). Add comments where clinically relevant.
+    When finished, click <em>Download Ratings</em> to save your responses as a CSV file and email it to the research team.
+  </div>
 </div>
-<p class="footnote">After downloading, please email your CSV file to the research team.</p>
+
+<div class="content">
+
+  <!-- ALERTS -->
+  <div id="alertOk"  class="alert alert-ok"></div>
+  <div id="alertErr" class="alert alert-err"></div>
+
+  <!-- CREDENTIALS -->
+  <div class="card">
+    <div class="card-header">Section 1 — Reviewer Information</div>
+    <div class="card-body">
+      <div class="card-note">All fields marked with * are required and will be included in the exported data file.</div>
+      <form id="expertForm">
+        <div class="form-grid">
+          <div class="field">
+            <label>Full Name <span class="req">*</span></label>
+            <input type="text" id="fullName" required placeholder="As it appears in publications">
+          </div>
+          <div class="field">
+            <label>Email <span class="req">*</span></label>
+            <input type="email" id="email" required placeholder="institutional email preferred">
+          </div>
+          <div class="field">
+            <label>Institution / Organization</label>
+            <input type="text" id="institution" placeholder="e.g., King Abdulaziz University">
+          </div>
+          <div class="field">
+            <label>Primary Field of Expertise <span class="req">*</span></label>
+            <select id="expertise" required>
+              <option value="">— Select —</option>
+              <option value="child_development">Child Development / Developmental Psychology</option>
+              <option value="pediatrics">Pediatrics / Pediatric Medicine</option>
+              <option value="clinical_psychology">Clinical Psychology / Neuropsychology</option>
+              <option value="speech_language">Speech-Language Pathology</option>
+              <option value="special_education">Special Education</option>
+              <option value="occupational_therapy">Occupational Therapy</option>
+              <option value="education">Education / Early Childhood Education</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Years of Professional Experience <span class="req">*</span></label>
+            <input type="number" id="yearsExperience" min="0" max="60" placeholder="e.g., 15" required>
+          </div>
+          <div class="field">
+            <label>Arabic Language Proficiency <span class="req">*</span></label>
+            <select id="language" required>
+              <option value="">— Select —</option>
+              <option value="native">Native Speaker</option>
+              <option value="fluent">Fluent / Proficient</option>
+              <option value="intermediate">Intermediate</option>
+              <option value="basic">Basic</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-grid full">
+          <div class="field">
+            <label>Additional Background <span style="font-weight:400;color:#999">(optional)</span></label>
+            <textarea id="additionalInfo" placeholder="Relevant certifications, subspecialties, or research experience"></textarea>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ITEMS -->
+  <div class="card">
+    <div class="card-header">Section 2 — Item Ratings (Quality and Clarity, 1–5)</div>
+    <div class="card-body">
+      <div class="card-note">
+        <strong>Quality:</strong> Does this item adequately measure its stated developmental domain?
+        &nbsp;|&nbsp;
+        <strong>Clarity:</strong> Is the item wording clear and comprehensible to Saudi Arabic-speaking parents?
+        &nbsp;|&nbsp;
+        Scale: 1 = Poor &nbsp; 2 = Below average &nbsp; 3 = Adequate &nbsp; 4 = Good &nbsp; 5 = Excellent
+      </div>
+
+      <div class="progress-wrap">
+        <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+        <div class="progress-text" id="progressText">0 of 0 items rated</div>
+      </div>
+
+      <div id="loadingMsg">
+        <div class="spinner"></div>
+        Loading items...
+      </div>
+
+      <div class="tbl-wrap" id="tableWrap" style="display:none">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:7%">Month</th>
+              <th style="width:13%">Domain</th>
+              <th style="width:5%">Code</th>
+              <th style="width:24%">Arabic Item</th>
+              <th style="width:23%">English Item</th>
+              <th style="width:8%;text-align:center">Quality<br>(1–5)</th>
+              <th style="width:8%;text-align:center">Clarity<br>(1–5)</th>
+              <th style="width:12%">Comments</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-secondary" type="button" onclick="resetForm()">Clear All</button>
+        <button class="btn btn-primary"   type="button" onclick="downloadCSV()">Download Ratings</button>
+      </div>
+      <p class="footnote">After downloading, please email the CSV file to the research team.</p>
+    </div>
+  </div>
+
+</div><!-- /content -->
 
 <script>
 // ── CSV parser ────────────────────────────────────────────────────────────────
+function splitLine(line) {
+  const cols = []; let cur = '', inQ = false;
+  for (let i = 0; i < line.length; i++) {
+    if (line[i] === '"') { inQ = !inQ; }
+    else if (line[i] === ',' && !inQ) { cols.push(cur); cur = ''; }
+    else { cur += line[i]; }
+  }
+  cols.push(cur);
+  return cols.map(c => c.replace(/^"|"$/g, '').trim());
+}
 function parseCSV(text) {
   const lines = text.trim().split(/\r?\n/);
-  const headers = splitCSVLine(lines[0]);
+  const headers = splitLine(lines[0]);
   return lines.slice(1).map(line => {
-    const cols = splitCSVLine(line);
+    const cols = splitLine(line);
     const obj = {};
-    headers.forEach((h, i) => { obj[h] = (cols[i] ?? '').trim(); });
+    headers.forEach((h, i) => { obj[h] = cols[i] ?? ''; });
     return obj;
   });
 }
-function splitCSVLine(line) {
-  const cols = []; let cur = '', inQ = false;
-  for (let i = 0; i < line.length; i++) {
-    const ch = line[i];
-    if (ch === '"') { inQ = !inQ; }
-    else if (ch === ',' && !inQ) { cols.push(cur); cur = ''; }
-    else { cur += ch; }
-  }
-  cols.push(cur);
-  return cols.map(c => c.replace(/^"|"$/g, ''));
-}
 
-// ── Domain badge ──────────────────────────────────────────────────────────────
+// ── Domain badges ─────────────────────────────────────────────────────────────
 const domClass = {
   'Communication':   'dom-Communication',
   'Gross motor':     'dom-Gross-motor',
@@ -337,38 +400,40 @@ let totalItems = 0;
 function buildTable(items) {
   totalItems = items.length;
   const tbody = document.getElementById('tbody');
-  const opts = '<option value="">—</option>' + [1,2,3,4,5].map(n =>
-    `<option value="${n}">${n}</option>`).join('');
+  const opts = '<option value="">—</option>' +
+    [1,2,3,4,5].map(n => `<option value="${n}">${n}</option>`).join('');
 
+  const frag = document.createDocumentFragment();
   items.forEach((row, i) => {
-    const n = i + 1;
-    const dc = domClass[row.domain] || '';
+    const n   = i + 1;
+    const dc  = domClass[row.domain] || '';
     const badge = dc
-      ? `<span class="domain-badge ${dc}">${row.domain}</span>`
-      : row.domain;
+      ? `<span class="dom-badge ${dc}">${row.domain}</span>`
+      : (row.domain || '');
     const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td style="white-space:nowrap;font-size:.85em">${row.quest_label || ''}</td>
-      <td>${badge}</td>
-      <td style="font-size:.85em"><strong>${row.item_code || ''}</strong></td>
-      <td dir="rtl" lang="ar" style="text-align:right;font-size:.97em">${row.item_text_ar || ''}</td>
-      <td style="font-size:.92em">${row.item_text_en || ''}</td>
-      <td style="text-align:center">
+    tr.innerHTML =
+      `<td style="font-size:.82em;white-space:nowrap">${row.quest_label || ''}</td>` +
+      `<td>${badge}</td>` +
+      `<td style="font-size:.82em"><code>${row.item_code || ''}</code></td>` +
+      `<td dir="rtl" lang="ar" style="text-align:right">${row.item_text_ar || ''}</td>` +
+      `<td>${row.item_text_en || ''}</td>` +
+      `<td style="text-align:center">
         <select class="rating-sel" id="q_${n}"
           data-quest="${row.quest_label||''}" data-code="${row.item_code||''}"
           onchange="updateProgress()">
           ${opts}
         </select>
-      </td>
-      <td style="text-align:center">
+      </td>` +
+      `<td style="text-align:center">
         <select class="rating-sel" id="c_${n}" onchange="updateProgress()">${opts}</select>
-      </td>
-      <td><textarea class="comment-ta" id="t_${n}"></textarea></td>`;
-    tbody.appendChild(tr);
+      </td>` +
+      `<td><textarea class="comment-ta" id="t_${n}"></textarea></td>`;
+    frag.appendChild(tr);
   });
+  tbody.appendChild(frag);
 
-  document.getElementById('loadingMsg').style.display = 'none';
-  document.getElementById('tableWrap').style.display  = 'block';
+  document.getElementById('loadingMsg').style.display  = 'none';
+  document.getElementById('tableWrap').style.display   = 'block';
   updateProgress();
 }
 
@@ -378,11 +443,11 @@ function updateProgress() {
   for (let i = 1; i <= totalItems; i++) {
     const q = document.getElementById('q_' + i);
     const c = document.getElementById('c_' + i);
-    if (q && q.value && c && c.value) rated++;
+    if (q?.value && c?.value) rated++;
   }
   const pct = totalItems ? Math.round(rated / totalItems * 100) : 0;
-  document.getElementById('progressFill').style.width  = pct + '%';
-  document.getElementById('progressLabel').textContent =
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent =
     `${rated} of ${totalItems} items rated (${pct}%)`;
 }
 
@@ -394,85 +459,78 @@ function updateProgress() {
       const res = await fetch(p);
       if (!res.ok) continue;
       const items = parseCSV(await res.text()).filter(r => r.item_code);
-      buildTable(items);
-      return;
-    } catch (e) { /* try next */ }
+      if (items.length > 0) { buildTable(items); return; }
+    } catch (_) { /* try next path */ }
   }
   document.getElementById('loadingMsg').innerHTML =
-    '<p style="color:#c00">⚠ Items could not be loaded. Please open this page through a web server (not as a local file).</p>';
+    '<p style="color:#c0392b;font-size:.9em">Items could not be loaded. ' +
+    'Please open this page through a web server, not as a local file.</p>';
 })();
 
 // ── Validation ────────────────────────────────────────────────────────────────
+const $ = id => document.getElementById(id);
 function validate() {
-  const g  = id => document.getElementById(id).value.trim();
-  const rx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!g('fullName'))          { err('Full Name is required.');                    return false; }
-  if (!rx.test(g('email')))    { err('A valid Email is required.');                return false; }
-  if (!g('expertise'))         { err('Field of Expertise is required.');           return false; }
-  if (!g('yearsExperience'))   { err('Years of Experience is required.');          return false; }
-  if (!g('language'))          { err('Arabic Language Proficiency is required.');  return false; }
+  const g = id => $(id).value.trim();
+  if (!g('fullName'))        { showErr('Full Name is required.');                   return false; }
+  if (!/\S+@\S+\.\S+/.test(g('email'))) { showErr('A valid Email is required.');  return false; }
+  if (!g('expertise'))       { showErr('Field of Expertise is required.');          return false; }
+  if (!g('yearsExperience')) { showErr('Years of Experience is required.');         return false; }
+  if (!g('language'))        { showErr('Arabic Language Proficiency is required.'); return false; }
   return true;
 }
-function err(msg) {
-  const el = document.getElementById('alertError');
-  el.textContent = msg; el.style.display = 'block';
-  document.getElementById('alertSuccess').style.display = 'none';
+function showErr(msg) {
+  $('alertErr').textContent = msg; $('alertErr').style.display = 'block';
+  $('alertOk').style.display = 'none';
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-function ok(msg) {
-  const el = document.getElementById('alertSuccess');
-  el.textContent = msg; el.style.display = 'block';
-  document.getElementById('alertError').style.display = 'none';
+function showOk(msg) {
+  $('alertOk').textContent = msg; $('alertOk').style.display = 'block';
+  $('alertErr').style.display = 'none';
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// ── CSV escape ────────────────────────────────────────────────────────────────
+// ── Download ──────────────────────────────────────────────────────────────────
 const esc = v => {
   const s = String(v ?? '');
   return (s.includes(',') || s.includes('"') || s.includes('\n'))
     ? '"' + s.replace(/"/g, '""') + '"' : s;
 };
-
-// ── Download ──────────────────────────────────────────────────────────────────
 function downloadCSV() {
   if (!validate()) return;
-  const g = id => document.getElementById(id).value.trim();
-  const expert = {
-    name: g('fullName'), email: g('email'), inst: g('institution'),
-    exp: g('expertise'), yrs: g('yearsExperience'), lang: g('language')
-  };
+  const g = id => $(id).value.trim();
+  const meta = [g('fullName'), g('email'), g('institution'),
+                g('expertise'), g('yearsExperience'), g('language')];
   const rows = [['reviewer_name','reviewer_email','institution','expertise',
                  'years_experience','language','quest_label','item_code',
                  'quality','clarity','comments']];
   for (let i = 1; i <= totalItems; i++) {
-    const q = document.getElementById('q_' + i);
+    const q = $('q_' + i);
     rows.push([
-      esc(expert.name), esc(expert.email), esc(expert.inst),
-      esc(expert.exp),  esc(expert.yrs),   esc(expert.lang),
+      ...meta.map(esc),
       esc(q?.getAttribute('data-quest') || ''),
       esc(q?.getAttribute('data-code')  || ''),
-      document.getElementById('q_' + i)?.value || '',
-      document.getElementById('c_' + i)?.value || '',
-      esc(document.getElementById('t_' + i)?.value || '')
+      $('q_' + i)?.value || '',
+      $('c_' + i)?.value || '',
+      esc($('t_' + i)?.value || '')
     ]);
   }
   const blob = new Blob(['\uFEFF' + rows.map(r => r.join(',')).join('\n')],
                         { type: 'text/csv;charset=utf-8;' });
   const a = Object.assign(document.createElement('a'), {
     href: URL.createObjectURL(blob),
-    download: 'asq3_review_' + expert.name.replace(/\s+/g, '_') + '.csv'
+    download: 'asq3_review_' + g('fullName').replace(/\s+/g,'_') + '.csv'
   });
   document.body.appendChild(a); a.click(); document.body.removeChild(a);
-  ok(`Ratings downloaded successfully. Please email the CSV file to the research team. Thank you, ${expert.name}!`);
+  showOk('Ratings downloaded successfully. Please email the CSV file to the research team. Thank you, ' + g('fullName') + '.');
 }
 
 // ── Reset ─────────────────────────────────────────────────────────────────────
 function resetForm() {
-  document.getElementById('expertForm').reset();
+  $('expertForm').reset();
   document.querySelectorAll('.rating-sel').forEach(el => el.value = '');
-  document.querySelectorAll('.comment-ta').forEach(el => el.value = '');
-  document.getElementById('alertError').style.display   = 'none';
-  document.getElementById('alertSuccess').style.display = 'none';
+  document.querySelectorAll('.comment-ta').forEach(el => el.value  = '');
+  $('alertErr').style.display = 'none';
+  $('alertOk').style.display  = 'none';
   updateProgress();
 }
 </script>
