@@ -1,9 +1,0 @@
-{
-  "name": "asq3-expert-review-functions",
-  "version": "1.0.0",
-  "description": "Netlify functions for ASQ-3 Saudi expert review system",
-  "main": "save-evaluation.js",
-  "dependencies": {
-    "json2csv": "^6.0.0"
-  }
-}
